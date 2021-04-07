@@ -14,9 +14,8 @@ public class BattleShipFrame extends JFrame {
 	private String axis_y; 
 	private JPanel p1_board; //each player will have different board states to be swapped in the center region
 	private JPanel p2_board;
-	//starting menu ?
-	//private Vector<ShipPanel> p1_ships; //a class for the ship game pieces 
-	//private Vector<ShipPanel> p2_ships; //TODO: finish writing shipPanel class
+	private GridLayout gridLayout;
+	
 	
 	public BattleShipFrame(){
 		super();
