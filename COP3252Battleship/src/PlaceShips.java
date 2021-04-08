@@ -110,46 +110,21 @@ public class PlaceShips extends JFrame implements ActionListener {
 								break;
 							}
 					}
-					
-					
-					
-					
-					/*
-					else if (event.getSource()==AllButtons.getComponent(0) ) {		//Ship 1 Button
-						JButton ShipButton=(JButton) AllButtons.getComponent(0);
-						ShipButton.setBackground(Color.YELLOW);
-					}
-					
-					else if (event.getSource()==AllButtons.getComponent(2) ) {		//Ship 2 Button
-						System.out.println("works2");
-					}
-					
-					else if (event.getSource()==AllButtons.getComponent(4) ) {		//Ship 3 Button
-						System.out.println("works3");
-					}
-					
-					else if (event.getSource()==AllButtons.getComponent(6) ) {		//Ship 4 Button
-						System.out.println("works4");
-					}
-					
-					else if (event.getSource()==AllButtons.getComponent(8) ) {		//Ship 5 Button
-						System.out.println("works5");
-					}
-					*/
-					
 						
 					else if (event.getSource()==GameBoard[y][x] && GameInProgress==true) {				
 							CheckForHit(y,x);					
 						}
 					
-					
-					
 			  }			
 	   } 
 		 
+		 /////////////////////////////////////////////////
+		 //      Buttons on left side below
+		 ////////////////////////////////////////////////
 		 for (int i=0;i<=8;i++) {
-			 if (event.getSource()==AllButtons.getComponent(i))
-				 	System.out.println("hit");
+			 if (event.getSource()==AllButtons.getComponent(i)) {
+				 	JButton ShipButton=(JButton)AllButtons.getComponent(i);	
+				 	ShipButton.setBackground(Color.YELLOW);					//set to gray when done
 				
 			}	 
 		 
@@ -160,9 +135,8 @@ public class PlaceShips extends JFrame implements ActionListener {
 			else if (event.getSource()==AllButtons.getComponent(12) ) {		//Ready Button
 				System.out.println("works ready");
 			}
-			
-		 
-		 
+		 }	
+		
   }
 	
 	public void CheckForHit(int y,int x) {
