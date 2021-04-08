@@ -1,14 +1,22 @@
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PlaceShips extends JFrame implements ActionListener {
+	
+	//version on github
 	
 	private GridLayout gridLayout;	
 	private JButton[][] GameBoard;
@@ -18,42 +26,59 @@ public class PlaceShips extends JFrame implements ActionListener {
 	private boolean OnFirstClick;
 	private Ship BattleFleet[];
 	
-	private int CurrentShip=0;
+	private int CurrentShip=4;
 	private boolean GameInProgress=false;
-	private JPanel jpanel;
-	
+	private JPanel MainPanel;
+	private JPanel AllButtons;
+	 
 	
 	public PlaceShips() {
 		  super("Place Ships");
 		  
-		  gridLayout=new GridLayout(10,10);
-		  jpanel=new JPanel(gridLayout);
+		  gridLayout=new GridLayout(10,10);			//original
+		// jpanel=new JPanel(gridLayout);			//original
+		  
+		  	
+		  MainPanel=new JPanel();
+		  BoxLayout boxlayout1=new BoxLayout(MainPanel,BoxLayout.X_AXIS);
+		  MainPanel.setLayout(boxlayout1);
+		  
+		  
+		  CreateButtonsOnLeftColumn();		//adding buttons to left hand side	  
+		  
+		  
+		  JPanel GridBoard=new JPanel();
+		  BoxLayout boxlayout3=new BoxLayout(GridBoard,BoxLayout.Y_AXIS);	 
+		  GridBoard.setLayout(boxlayout3);			
+		  
+		  
+		  JPanel mygrid=new JPanel(gridLayout);		  
+		  MainPanel.add(mygrid);
+		  
 		  
 		  BattleFleet=new Ship[5];				//storing ship objects inside of array "BattleFleet"
-		  InitializeShips();
-		  
+		  InitializeShips();		  
 		  OnFirstClick=true;
 		  FirstClick_X=FirstClick_Y=0;
 		  
 		  GameBoard=new JButton[10][10];		
 			for (int y=0;y<10;y++) {			
-				for (int x=0;x<10;x++) {								
+				for (int x=0;x<10;x++) {
 					GameBoard[y][x]=new JButton();
 					GameBoard[y][x].setBackground(Color.WHITE);
 					GameBoard[y][x].addActionListener(this);					
-					jpanel.add(GameBoard[y][x]);
+					mygrid.add(GameBoard[y][x]);
 				}			
 			}
 		  
-		  add(jpanel);
+		  add(MainPanel);
 		  
 		  
 	}
-		  
-	public void actionPerformed( ActionEvent event ) {		
-		if (CurrentShip<5) 
-			CurrentShipSize=BattleFleet[CurrentShip].GetShipSize();		
-			
+		  																//when user clicks on button, its highlighted a color
+	public void actionPerformed( ActionEvent event ) {					//gray out buttons after ship is placed
+		if (CurrentShip>=0) 
+			CurrentShipSize=BattleFleet[CurrentShip].GetShipSize();			
 		
 		
 		 for (int y=0;y<10;y++){										
@@ -70,9 +95,9 @@ public class PlaceShips extends JFrame implements ActionListener {
 					else if (event.getSource()==GameBoard[y][x] && OnFirstClick==false && GameInProgress==false) {					
 							if (SecondClickDrawsShip(y,x,CurrentShipSize)==true) { 		//only if true does the round end of placing the ship
 								OnFirstClick=true;
-								CurrentShip++;			//moves to next ship in BattleFleet once ship is placed
+								CurrentShip--;			//moves to next ship in BattleFleet once ship is placed
 								
-								if (CurrentShip>4) {		//this runs once all ships have been placed
+								if (CurrentShip<0) {		//this runs once all ships have been placed
 											
 									GameInProgress=true;		//Let the game begin!
 									for (int i=0;i<10;i++) {
@@ -85,22 +110,59 @@ public class PlaceShips extends JFrame implements ActionListener {
 								break;
 							}
 					}
-	
-					///////////////////////////////////////////////////////////
-					//Jason and Brian-Start here
-					//////////////////////////////////////////////////////////
 					
-					else if (event.getSource()==GameBoard[y][x] && GameInProgress==true) {							
-						
-							CheckForHit(y,x);
-						
-							
+					
+					
+					
+					/*
+					else if (event.getSource()==AllButtons.getComponent(0) ) {		//Ship 1 Button
+						JButton ShipButton=(JButton) AllButtons.getComponent(0);
+						ShipButton.setBackground(Color.YELLOW);
 					}
+					
+					else if (event.getSource()==AllButtons.getComponent(2) ) {		//Ship 2 Button
+						System.out.println("works2");
+					}
+					
+					else if (event.getSource()==AllButtons.getComponent(4) ) {		//Ship 3 Button
+						System.out.println("works3");
+					}
+					
+					else if (event.getSource()==AllButtons.getComponent(6) ) {		//Ship 4 Button
+						System.out.println("works4");
+					}
+					
+					else if (event.getSource()==AllButtons.getComponent(8) ) {		//Ship 5 Button
+						System.out.println("works5");
+					}
+					*/
+					
+						
+					else if (event.getSource()==GameBoard[y][x] && GameInProgress==true) {				
+							CheckForHit(y,x);					
+						}
 					
 					
 					
 			  }			
 	   } 
+		 
+		 for (int i=0;i<=8;i++) {
+			 if (event.getSource()==AllButtons.getComponent(i))
+				 	System.out.println("hit");
+				
+			}	 
+		 
+		    if (event.getSource()==AllButtons.getComponent(10) ) {		//Reset Button
+				System.out.println("works reset");
+			}
+			
+			else if (event.getSource()==AllButtons.getComponent(12) ) {		//Ready Button
+				System.out.println("works ready");
+			}
+			
+		 
+		 
   }
 	
 	public void CheckForHit(int y,int x) {
@@ -109,7 +171,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 					System.out.println("is a hit");										
 					GameBoard[y][x].setBackground(Color.RED);										
 					if (BattleFleet[i].ShipHasSunk()) {
-						System.out.println("ship "+ i +" has sunk");
+						System.out.println("ship "+ (i+1) +" has sunk");
 					}
 					GameBoard[y][x].setEnabled(false);
 					return;
@@ -128,7 +190,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 	}
 		
 	public boolean SecondClickDrawsShip(int YClick, int XClick,int ShipLength) {		//if user chooses a ship path
-		if (GameBoard[YClick][XClick].getBackground()==Color.GRAY) {
+		if (GameBoard[YClick][XClick].getBackground()==Color.LIGHT_GRAY) {
 			PlaceShipOnBoard(YClick,XClick,ShipLength);			
 			return true;
 		}
@@ -211,7 +273,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 		if (PathsToKeep!="KeepSouth") {	
 			
 			if(FirstClick_Y+ShipLength-1<=9) {
-				if (GameBoard[FirstClick_Y+i][FirstClick_X].getBackground()==Color.GRAY) {					
+				if (GameBoard[FirstClick_Y+i][FirstClick_X].getBackground()==Color.LIGHT_GRAY) {					
 					GameBoard[FirstClick_Y+i][FirstClick_X].setBackground(Color.WHITE);				
 				}
 				
@@ -224,7 +286,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 		if (PathsToKeep!="KeepNorth") {	
 		
 			if(FirstClick_Y-ShipLength+1>=0) {
-				if (GameBoard[FirstClick_Y-i][FirstClick_X].getBackground()==Color.GRAY) {					
+				if (GameBoard[FirstClick_Y-i][FirstClick_X].getBackground()==Color.LIGHT_GRAY) {					
 					GameBoard[FirstClick_Y-i][FirstClick_X].setBackground(Color.WHITE);			
 				}
 			}
@@ -235,7 +297,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 		if (PathsToKeep!="KeepEast") {	
 		
 			if(FirstClick_X+ShipLength-1<=9) {
-				if (GameBoard[FirstClick_Y][FirstClick_X+i].getBackground()==Color.GRAY) {					
+				if (GameBoard[FirstClick_Y][FirstClick_X+i].getBackground()==Color.LIGHT_GRAY) {					
 					GameBoard[FirstClick_Y][FirstClick_X+i].setBackground(Color.WHITE);
 				}
 			}
@@ -246,7 +308,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 		if (PathsToKeep!="KeepWest") {	
 		
 			if(FirstClick_X-ShipLength+1>=0) {
-				if (GameBoard[FirstClick_Y][FirstClick_X-i].getBackground()==Color.GRAY) {					
+				if (GameBoard[FirstClick_Y][FirstClick_X-i].getBackground()==Color.LIGHT_GRAY) {					
 					GameBoard[FirstClick_Y][FirstClick_X-i].setBackground(Color.WHITE);	
 				}
 			}
@@ -274,7 +336,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 			
 			if (DontDrawSouthFlag==0) {		
 				for (int i=0;i<Length;i++) 
-					GameBoard[Y+i][X].setBackground(Color.GRAY);
+					GameBoard[Y+i][X].setBackground(Color.LIGHT_GRAY);
 				}
 			
 		}
@@ -290,7 +352,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 			
 			if (DontDrawNorthFlag==0) {
 				for (int i=0;i<Length;i++) 
-					GameBoard[Y-i][X].setBackground(Color.GRAY);
+					GameBoard[Y-i][X].setBackground(Color.LIGHT_GRAY);
 				
 			}
 			
@@ -306,7 +368,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 			
 			if (DontDrawEastFlag==0) {	
 				for (int i=0;i<Length;i++) 
-					GameBoard[Y][X+i].setBackground(Color.GRAY);
+					GameBoard[Y][X+i].setBackground(Color.LIGHT_GRAY);
 			}
 				
 					
@@ -321,7 +383,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 			
 			if (DontDrawWestFlag==0) {				
 				for (int i=0;i<Length;i++) 
-					GameBoard[Y][X-i].setBackground(Color.GRAY);
+					GameBoard[Y][X-i].setBackground(Color.LIGHT_GRAY);
 			}
 			 
 		}
@@ -344,7 +406,44 @@ public class PlaceShips extends JFrame implements ActionListener {
 			ShipLength++;
 		}
 	}
-
+	
+	public void CreateButtonsOnLeftColumn() {
+		  AllButtons=new JPanel();	
+		  BoxLayout boxlayout=new BoxLayout(AllButtons,BoxLayout.Y_AXIS);	  
+		  AllButtons.setLayout(boxlayout);	 
+		 
+		  for (int i=0;i<7;i++) {			  
+			  JButton shipbutton=new JButton();
+			  shipbutton.addActionListener(this);
+			  
+			  if (i<=4) {
+				  shipbutton.setText("Ship " + (i+1) );
+				  AllButtons.add(shipbutton);
+				  AllButtons.add(Box.createRigidArea(new Dimension(0, 15)));
+			  }
+			  
+			  else if (i==5) {
+				  shipbutton.setText("Reset");
+				  shipbutton.setBackground(Color.BLACK);
+				  shipbutton.setForeground(Color.RED);
+				  AllButtons.add(shipbutton);
+				  AllButtons.add(Box.createRigidArea(new Dimension(0, 30)));
+			  }
+			  
+			  else {
+				  shipbutton.setText("Ready");
+				  shipbutton.setBackground(Color.YELLOW);
+				  AllButtons.add(shipbutton);
+				  shipbutton.setVisible(false);
+			  }
+			  
+		  }
+		  
+		  MainPanel.add(AllButtons);	
+		
+	}
+	
+/*
 	public static void main(String[] args) {
 		PlaceShips StartGame=new PlaceShips();
 		StartGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -354,5 +453,5 @@ public class PlaceShips extends JFrame implements ActionListener {
 
 
 	}
-
+*/
 }
