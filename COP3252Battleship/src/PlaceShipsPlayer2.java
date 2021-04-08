@@ -18,9 +18,7 @@ import javax.swing.JPanel;
 
 
 
-public class PlaceShips extends JFrame implements ActionListener {
-	
-	//version on github
+public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 	
 	private GridLayout gridLayout;	
 	private JButton[][] GameBoard;
@@ -43,8 +41,8 @@ public class PlaceShips extends JFrame implements ActionListener {
 	
 	
 	
-	public PlaceShips() {
-		  super("Player 1  Place Your Ships!");
+	public PlaceShipsPlayer2() {
+		  super("Player 2  Place Your Ships!");
 		  
 		  gridLayout=new GridLayout(10,10);	
 				  		  	
@@ -174,20 +172,17 @@ public class PlaceShips extends JFrame implements ActionListener {
 				
 			}
 			
-			else if (event.getSource()==ShipButtons.getComponent(12) ) {		//Ready Button    Clicking switches to player two
-				//clicking this button switches so other player can place pieces
+			else if (event.getSource()==ShipButtons.getComponent(12) ) {		//Ready Button    Clicking starts game
+				//clicking this button starts game
 				
 				
-	//////////////////////////////////////////////////////////////////////////////////////////////////			
-				PlaceShipsPlayer2 player2turn=new PlaceShipsPlayer2();
-				player2turn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				player2turn.setSize(500, 400);
-				player2turn.setResizable(true);		
-				player2turn.setVisible(true);
-	////////////////////////////////////////////////////////////////////////////////////////////////////			
 				
-				
-					
+					DisableBoard("no");
+					GameInProgress=true;		
+					for (int k=0;k<10;k++) {
+						for (int j=0;j<10;j++) 
+							GameBoard[k][j].setBackground(Color.BLUE);											
+					}
 					
 				
 			}//end else if
@@ -520,5 +515,7 @@ public class PlaceShips extends JFrame implements ActionListener {
 		}while(true);							
 	}
 	
-		
-} //end class PlaceShips
+	
+	
+
+}

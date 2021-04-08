@@ -4,6 +4,8 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 public class Ship {
+	
+	//version on github
 
 	private JButton[][] LocationOnGameBoard;
 	private int ShipSize;
@@ -47,6 +49,15 @@ public class Ship {
 		
 	}
 	
-	
+	public void ResetShipCoordinates() {
+		
+		for (int i=0;i<10;i++) {
+			for (int j=0;j<10;j++) {
+				if (LocationOnGameBoard[i][j].isEnabled()) {
+					LocationOnGameBoard[i][j].setEnabled(false);
+				}											
+			}
+		}		
+	}
 	
 }

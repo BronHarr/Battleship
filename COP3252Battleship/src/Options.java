@@ -13,7 +13,7 @@ public class Options implements ActionListener
 			
 			MainMenu.frame.setVisible(false);
 			
-			/////////////////////////////////////////////////////////////////////////	Game Begins
+			/////////////////////////////////////////////////////////////////////////	Ship placement begins
 			PlaceShips StartGame=new PlaceShips();
 			StartGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			StartGame.setSize(500, 400);
