@@ -10,13 +10,13 @@ public class Ship {
 	private JButton[][] LocationOnGameBoard;
 	private int ShipSize;
 	private int HitCounter;
-	private boolean ShipIsAlive;
+
 	
 	public Ship(int ShipSize) {
 		this.ShipSize=ShipSize;
 		LocationOnGameBoard=new JButton[10][10];
 		HitCounter=0;
-		ShipIsAlive=true;
+		
 		for (int i=0;i<10;i++) {
 			for (int j=0;j<10;j++) {
 				LocationOnGameBoard[i][j]=new JButton();

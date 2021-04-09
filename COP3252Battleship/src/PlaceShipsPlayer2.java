@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-
 public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 	
 	private GridLayout gridLayout;	
@@ -26,12 +25,12 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 	private int FirstClick_X;
 	private int FirstClick_Y;
 	private boolean OnFirstClick;		//set to true before choosing which ship to set, false after clicking button to place ship
-	private Ship BattleFleet[];
+	public static Ship BattleFleet[];
 	
 	private int CurrentShip=0;
 	private boolean GameInProgress=false;	//set to true after all 5 ships are placed
 	private JPanel MainPanel;
-	public JPanel ShipButtons;
+	private JPanel ShipButtons;
 	private JButton ClickedShipButton;
 	
 	private boolean BoardEnabled=false;
@@ -39,10 +38,12 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 	private int ShipsPlacedOnBoard=0;
 	private ArrayList<Integer> CoordinatePair;
 	
-	
+	private JFrame MyFrame;	
 	
 	public PlaceShipsPlayer2() {
-		  super("Player 2  Place Your Ships!");
+		  
+		  
+		  MyFrame=new JFrame("Player 2  Place Your Ships!");
 		  
 		  gridLayout=new GridLayout(10,10);	
 				  		  	
@@ -75,7 +76,11 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 			}
 		  DisableBoard("yes");
 		  CoordinatePair=new ArrayList<Integer>();
-		  add(MainPanel);
+		  MyFrame.add(MainPanel);
+		  MyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		  MyFrame.setSize(500, 400);
+		  MyFrame.setResizable(true);		
+		  MyFrame.setVisible(true);
 		  
 		  
 	}
@@ -104,10 +109,7 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 						break;	
 					}
 						
-					else if (event.getSource()==GameBoard[y][x] && GameInProgress==true) {				
-							CheckForHit(y,x);					
-						}
-					
+				
 			  }			
 	   }//end boardgame for loop 
 		 
@@ -171,48 +173,20 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 				ResetBoard();	//also disables board
 				
 			}
-			
+//888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888			
 			else if (event.getSource()==ShipButtons.getComponent(12) ) {		//Ready Button    Clicking starts game
-				//clicking this button starts game
+				
+				MyFrame.setVisible(false);
+				
+				Player2Move player2move=new Player2Move();
+				PlayerMove player1move=new PlayerMove();
 				
 				
-				
-					DisableBoard("no");
-					GameInProgress=true;		
-					for (int k=0;k<10;k++) {
-						for (int j=0;j<10;j++) 
-							GameBoard[k][j].setBackground(Color.BLUE);											
-					}
-					
-				
-			}//end else if
-		
+			}
+//8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888		
   }
 	
-	public void CheckForHit(int y,int x) {
-		for (int i=0;i<5;i++) {			
-			if (BattleFleet[i].IsAHit(y,x)) {
-					System.out.println("is a hit");										
-					GameBoard[y][x].setBackground(Color.RED);										
-					if (BattleFleet[i].ShipHasSunk()) {
-						System.out.println("ship "+ (i+1) +" has sunk");
-					}
-					GameBoard[y][x].setEnabled(false);
-					return;
-			}
-			
-			else if (!BattleFleet[i].IsAHit(y, x)) {
-				GameBoard[y][x].setBackground(Color.WHITE);
-				GameBoard[y][x].setEnabled(false);
-				System.out.println("not a hit");
-				
-			}
-		}
-			
-		
-		
-	}
-		
+	
 	public boolean SecondClickDrawsShip(int YClick, int XClick,int ShipLength) {		//if user chooses a ship path, ship is created
 		if (GameBoard[YClick][XClick].getBackground()==Color.LIGHT_GRAY) {
 			PlaceShipOnBoard(YClick,XClick,ShipLength);			
