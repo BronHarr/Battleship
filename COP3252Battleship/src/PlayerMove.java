@@ -19,16 +19,15 @@ public class PlayerMove extends JPanel {
 	private WaterPanel[][] PlayerGameBoard;	
 	private int ShipsRemaining=5;
 	private int turnsTaken;
-	
-										
-	public PlayerMove(Ship[] p2Fleet){						  
+					
+	public PlayerMove(){						  
 		
 		  gridLayout=new GridLayout(10,10,1,1);
 		  setPreferredSize(new Dimension(500,500));
 		  jpanel=new JPanel(gridLayout);
 		  jpanel.setBackground(Color.BLACK);
 		  jpanel.setPreferredSize(new Dimension(500, 500));
-		  EnemyFleet= p2Fleet;
+		  EnemyFleet= PlaceShipsPlayer2.BattleFleet;
 		  
 		  this.setBackground(Color.black);
 		  PlayerGameBoard = new WaterPanel[10][10];		

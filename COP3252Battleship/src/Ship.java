@@ -3,7 +3,7 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 
-public class Ship implements Cloneable{
+public class Ship{
 	
 	//version on github
 
@@ -25,11 +25,6 @@ public class Ship implements Cloneable{
 		}
 	}
 	
-	@Override
-	public Object clone() throws CloneNotSupportedException {	
-			return (Ship)super.clone();
-	}
-	
 	public int GetShipSize() {
 		return ShipSize;
 	}
@@ -47,11 +42,8 @@ public class Ship implements Cloneable{
 		return false;
 	}
 	
-	
-	
 	public boolean ShipHasSunk() {
-		return (HitCounter==ShipSize);
-		
+		return (HitCounter==ShipSize);	
 	}
 	
 	public void ResetShipCoordinates() {

@@ -13,6 +13,7 @@ public class WaterPanel extends JPanel{
 	private final int whichPlayer;
 	private int xCoord;
 	private int yCoord;
+	private Ship[] fleet;
 	
 	
 	public WaterPanel(int player, int x, int y){
@@ -20,6 +21,13 @@ public class WaterPanel extends JPanel{
 		whichPlayer = player;
 		xCoord = x;
 		yCoord = y;
+		if(player == 1) {
+			fleet = PlaceShips.BattleFleet;
+		}
+		else {
+			fleet = PlaceShipsPlayer2.BattleFleet;
+		}
+		
 		//when clicked, update cell to show 
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -48,9 +56,9 @@ public class WaterPanel extends JPanel{
 		if(whichPlayer == 1) {
 			int i = 0;
 			while(i < 5) {
-			/* if(PlaceShips.BattleFleet[i].IsAHit(yCoord, xCoord)) { //nullpointer exception here
+			 if(PlaceShips.BattleFleet[i].IsAHit(yCoord, xCoord)) { //nullpointer exception here
 				 ShipHit = true;
-			 }*/ShipHit = true; //true for testing hit drawing
+			 }
 			 i++;
 			}
 			update();

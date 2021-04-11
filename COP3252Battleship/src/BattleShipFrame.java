@@ -25,9 +25,9 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 	private Player2Move p2;
 	private Timer timer;
 	
-	public static void main(String args[]) {
-		BattleShipFrame bf = new BattleShipFrame();
-	}
+	/*public static void main(String args[]) {
+		BattleShipFrame bsf = new BattleShipFrame();
+	}*/
 	
 	public BattleShipFrame(){
 		
@@ -37,14 +37,14 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		setSize(1000,900);
 		setLayout(gui);
 		container = getContentPane();
-		p2 = new Player2Move(p1Fleet); 
-		p1 = new PlayerMove(p2Fleet);
+		p2 = new Player2Move(); 
+		p1 = new PlayerMove();
 		currentPlayerTurn = 1;
 
 		this.add(p1, BorderLayout.CENTER);
 		this.setVisible(true);
 
-		timer = new Timer(5000, this);
+		timer = new Timer(1000, this);
 		timer.start();
 		
 	}
@@ -67,10 +67,12 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		if(currentPlayerTurn == 1) {
 		 remove(p1);
 		 add(p2, BorderLayout.CENTER);
+		 validate();
 		}
 		else {
 			remove(p2);
 			add(p1, BorderLayout.CENTER);
+			validate();
 		}
 	}
 	
