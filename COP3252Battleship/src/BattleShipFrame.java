@@ -1,42 +1,77 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public class BattleShipFrame extends JFrame {
+public class BattleShipFrame extends JFrame implements ActionListener{
+	
 	private Container container;
 	private BorderLayout gui; //north and west regions for coordinate labels, south and east for gui
-	private String axis_y; 
-	private JPanel p1_board; //each player will have different board states to be swapped in the center region
-	private JPanel p2_board;
-	private GridLayout gridLayout;
+	private int currentPlayerTurn;
+	private Ship[] p1Fleet;
+	private Ship[] p2Fleet;
+	private PlayerMove p1;
+	private Player2Move p2;
+	private Timer timer;
 	
+	public static void main(String args[]) {
+		BattleShipFrame bf = new BattleShipFrame();
+	}
 	
 	public BattleShipFrame(){
-		super();
 		
-		gui = new BorderLayout(40,20);
+		p1Fleet = PlaceShips.BattleFleet;
+		p2Fleet = PlaceShipsPlayer2.BattleFleet;
+		gui = new BorderLayout(5, 2);
+		setSize(1000,900);
 		setLayout(gui);
 		container = getContentPane();
-		p1_board = new JPanel(); // TODO: JPanel graphics
-		p1_board.setLayout( new GridLayout(10, 10, 2, 2));
-		p1_board.setBackground(Color.black);
-		p1_board.setSize(1000, 1000);
-		p2_board = new JPanel();
-		p2_board.setLayout( new GridLayout(10, 10));
+		p2 = new Player2Move(p1Fleet); 
+		p1 = new PlayerMove(p2Fleet);
+		currentPlayerTurn = 1;
+
+		this.add(p1, BorderLayout.CENTER);
+		this.setVisible(true);
+
+		timer = new Timer(5000, this);
+		timer.start();
 		
-		for(int i = 0; i < 100; i++) {
-			p1_board.add(new WaterPanel());
-			p2_board.add(new WaterPanel());
+	}
+	
+	public void actionPerformed(ActionEvent time) {
+		if(isReady()) {
+			NextTurn();
 		}
-		//TODO: initialize ships
-		add(p1_board, BorderLayout.CENTER);
-		
+			
+	}
+	
+	public boolean isReady() {
+		//if player has taken their turn, return true
+		return 	(p1.getTurns() > p2.getTurns() && currentPlayerTurn == 1)
+				||
+				(p1.getTurns() == p2.getTurns() && currentPlayerTurn == 2);
+	}
+	
+	public void NextTurn() {
+		if(currentPlayerTurn == 1) {
+		 remove(p1);
+		 add(p2, BorderLayout.CENTER);
+		}
+		else {
+			remove(p2);
+			add(p1, BorderLayout.CENTER);
+		}
 	}
 	
 }

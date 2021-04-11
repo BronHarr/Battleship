@@ -3,26 +3,31 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 
-public class Ship {
+public class Ship implements Cloneable{
 	
 	//version on github
 
-	private JButton[][] LocationOnGameBoard;
+	private boolean[][] LocationOnGameBoard;
 	private int ShipSize;
 	private int HitCounter;
 
 	
 	public Ship(int ShipSize) {
 		this.ShipSize=ShipSize;
-		LocationOnGameBoard=new JButton[10][10];
+		LocationOnGameBoard=new boolean[10][10];
 		HitCounter=0;
 		
 		for (int i=0;i<10;i++) {
 			for (int j=0;j<10;j++) {
-				LocationOnGameBoard[i][j]=new JButton();
-				LocationOnGameBoard[i][j].setEnabled(false);;				
+				//LocationOnGameBoard[i][j]=new JButton();
+				LocationOnGameBoard[i][j] = false;				
 			}
 		}
+	}
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {	
+			return (Ship)super.clone();
 	}
 	
 	public int GetShipSize() {
@@ -30,12 +35,12 @@ public class Ship {
 	}
 	
 	public void AddShipCoordinates(int y,int x) {
-			LocationOnGameBoard[y][x].setEnabled(true);;		//using enabled for a valid coordinate
+			LocationOnGameBoard[y][x] = true;		//using enabled for a valid coordinate
 	}
 	
 	public boolean IsAHit(int y,int x) {
 		
-		if (LocationOnGameBoard[y][x].isEnabled()) {
+		if (LocationOnGameBoard[y][x]) {
 				HitCounter++;
 				return true;
 		}
@@ -53,8 +58,8 @@ public class Ship {
 		
 		for (int i=0;i<10;i++) {
 			for (int j=0;j<10;j++) {
-				if (LocationOnGameBoard[i][j].isEnabled()) {
-					LocationOnGameBoard[i][j].setEnabled(false);
+				if (LocationOnGameBoard[i][j]) {
+					LocationOnGameBoard[i][j] = false;
 				}											
 			}
 		}		

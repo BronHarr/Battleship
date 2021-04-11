@@ -176,12 +176,8 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 //888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888			
 			else if (event.getSource()==ShipButtons.getComponent(12) ) {		//Ready Button    Clicking starts game
 				
+				BattleShipFrame Bframe = new BattleShipFrame();
 				MyFrame.setVisible(false);
-				
-				Player2Move player2move=new Player2Move();
-				PlayerMove player1move=new PlayerMove();
-				
-				
 			}
 //8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888		
   }

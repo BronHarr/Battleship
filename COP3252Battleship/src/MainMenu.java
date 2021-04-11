@@ -2,10 +2,10 @@ import java.awt.*;
 import javax.swing.*;
 public class MainMenu extends JFrame
 {
-	public static void main(String[] args)
+	/*public static void main(String[] args)
 	{
 		MainMenu menu=new MainMenu(800,400);
-	}
+	}*/
 	public static JFrame frame;
 	public static JButton start;
 	public static JButton rules;

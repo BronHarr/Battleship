@@ -25,6 +25,5 @@ public class Options implements ActionListener
 			
 		}
 		
-		
 	}
 }
