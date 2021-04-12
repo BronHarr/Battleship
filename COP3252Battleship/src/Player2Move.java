@@ -18,22 +18,25 @@ public class Player2Move extends JPanel {
 	private WaterPanel[][] PlayerGameBoard;
 	private int ShipsRemaining=5;
 	private int turnsTaken;
-	
+	//bombarded : permanently adds 3 to turnsTaken so as not to disrupt turn mechanism
+
 	public Player2Move(){
 		
 		gridLayout= new GridLayout(10,10,1,1);
 		setPreferredSize(new Dimension(500,500));
 		jpanel= new JPanel(gridLayout);
-		EnemyFleet=PlaceShips.BattleFleet;
-		jpanel.setSize(500, 500);
+		jpanel.setBackground(Color.black);
+		jpanel.setPreferredSize(new Dimension(500, 500));
+		EnemyFleet= PlaceShips.BattleFleet;
+		
 		this.setBackground(Color.black);
 		PlayerGameBoard = new WaterPanel[10][10];		
-			for (int y=0;y<10;y++) {			
-				for (int x=0;x<10;x++) {					
-					PlayerGameBoard[x][y] = new WaterPanel(2, x, y);
-					jpanel.add(PlayerGameBoard[x][y]);				
-				}
+		for (int y=0;y<10;y++) {			
+			for (int x=0;x<10;x++) {					
+				PlayerGameBoard[x][y] = new WaterPanel(2, x, y);
+				jpanel.add(PlayerGameBoard[x][y]);				
 			}
+		}
 		add(jpanel);
 	}
 	

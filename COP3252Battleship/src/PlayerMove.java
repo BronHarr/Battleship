@@ -18,34 +18,36 @@ public class PlayerMove extends JPanel {
 	private JPanel TheFrame;
 	private WaterPanel[][] PlayerGameBoard;	
 	private int ShipsRemaining=5;
-	private int turnsTaken;
+	private int turnsTaken=0;
+	private int turnsEffective=0;
+	private boolean bombarded; //permanently adds 3 to turnsTaken so as not to disrupt turn mechanism
 					
 	public PlayerMove(){						  
 		
-		  gridLayout=new GridLayout(10,10,1,1);
-		  setPreferredSize(new Dimension(500,500));
-		  jpanel=new JPanel(gridLayout);
-		  jpanel.setBackground(Color.BLACK);
-		  jpanel.setPreferredSize(new Dimension(500, 500));
-		  EnemyFleet= PlaceShipsPlayer2.BattleFleet;
+		gridLayout= new GridLayout(10,10,1,1);
+		setPreferredSize(new Dimension(500,500));
+		jpanel= new JPanel(gridLayout);
+		jpanel.setBackground(Color.BLACK);
+		jpanel.setPreferredSize(new Dimension(500, 500));
+		EnemyFleet= PlaceShipsPlayer2.BattleFleet;
 		  
-		  this.setBackground(Color.black);
-		  PlayerGameBoard = new WaterPanel[10][10];		
-			for (int y=0;y<10;y++) {			
-				for (int x=0;x<10;x++) {			
-					PlayerGameBoard[x][y] = new WaterPanel(1, x, y);
-					jpanel.add(PlayerGameBoard[x][y]);
-				}
+		this.setBackground(Color.black);
+		PlayerGameBoard = new WaterPanel[10][10];		
+		for (int y=0;y<10;y++) {			
+			for (int x=0;x<10;x++) {			
+				PlayerGameBoard[x][y] = new WaterPanel(1, x, y);
+				jpanel.add(PlayerGameBoard[x][y]);
 			}
-			add(jpanel);
+		}
+		add(jpanel);
 	}
 	
 	public int getTurns() {
-		turnsTaken = countTurns();
+		countTurns();
 		return turnsTaken;
 	}
 	
-	public int countTurns() {
+	public void countTurns() {
 		int count = 0;
 		for (int y=0;y<10;y++) {			
 			for (int x=0;x<10;x++) {
@@ -53,6 +55,17 @@ public class PlayerMove extends JPanel {
 				 count++;
 			}
 		}
-		return count;
+		turnsTaken = count;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+

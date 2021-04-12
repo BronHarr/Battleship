@@ -15,33 +15,25 @@ public class WaterPanel extends JPanel{
 	private int yCoord;
 	private Ship[] fleet;
 	
-	
 	public WaterPanel(int player, int x, int y){
+	
 		missed = false;
 		whichPlayer = player;
 		xCoord = x;
 		yCoord = y;
-		if(player == 1) {
+		if(whichPlayer == 1) {
 			fleet = PlaceShips.BattleFleet;
 		}
 		else {
 			fleet = PlaceShipsPlayer2.BattleFleet;
 		}
-		
 		//when clicked, update cell to show 
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-			  try {
-				for(int i = 0; i<5; i++) {
 				  if(!Interacted()) {
 				   CheckForHit();
 				   update();
-				  }
-			    }
-			  }
-			  catch(NullPointerException n) {
-				  
-			  }
+				  }	
 			}
 		});
 	}
@@ -50,35 +42,29 @@ public class WaterPanel extends JPanel{
 	public boolean Interacted() {
 		return(missed||ShipHit);
 	}
+	public boolean Missed() {
+		return missed;
+	}
+	public boolean isHit() {
+		return ShipHit;
+	}
 	
-	//checks p1 or p2 fleet
-	private void CheckForHit() {
-		if(whichPlayer == 1) {
-			int i = 0;
-			while(i < 5) {
-			 if(PlaceShips.BattleFleet[i].IsAHit(yCoord, xCoord)) { //nullpointer exception here
-				 ShipHit = true;
-			 }
-			 i++;
-			}
-			update();
+	private void CheckForHit() {		
+		int i = 0;
+		while(i < 5) {
+			if(fleet[i].IsAHit(yCoord, xCoord)) 
+				ShipHit = true;
+			i++;
 		}
-		else {
-			int i = 0;
-			while(i < 5) {
-			 if(PlaceShipsPlayer2.BattleFleet[i].IsAHit(yCoord, xCoord)) {
-				 ShipHit = true; 
-			 }
-			 i++;
-			}
-			update();
-		}
+		update();
+		
 		if(!ShipHit) {
 			missed = true;
 			update();
 		}
 		
 	}
+	
 	public void update() {
 		repaint();
 	}
@@ -98,12 +84,12 @@ public class WaterPanel extends JPanel{
 			g2d.drawLine(this.getWidth(), 0, 0, this.getHeight());
 		}//red circle to represent hit
 		else if(ShipHit) {
-			g2d.setColor(Color.black);
-			g2d.setStroke(new BasicStroke(3));
+			g2d.setColor(Color.darkGray);
+			g2d.setStroke(new BasicStroke(5));
 			g2d.drawLine(this.getWidth()/2, 0, (this.getWidth()/2)+3, this.getHeight()/2);
 			g2d.drawLine(this.getWidth()/2, 0, (this.getWidth()/2)-3, this.getHeight()/2);
-			g2d.drawLine(0, this.getHeight()/2, (this.getWidth()/2), (this.getHeight()/2)-5);
-			g2d.drawLine(0, this.getHeight()/2, (this.getWidth()/2), (this.getHeight()/2)+5);
+			g2d.drawLine(0, this.getHeight()/2, (this.getWidth()/2), (this.getHeight()/2)-3);
+			g2d.drawLine(0, this.getHeight()/2, (this.getWidth()/2), (this.getHeight()/2)+3);
 			
 			g2d.drawLine(this.getWidth()/2, this.getHeight(), (this.getWidth()/2)+3, this.getHeight()/2);
 			g2d.drawLine(this.getWidth()/2, this.getHeight(), (this.getWidth()/2)-3, this.getHeight()/2);
@@ -111,7 +97,7 @@ public class WaterPanel extends JPanel{
 			g2d.drawLine(this.getWidth(), this.getHeight()/2, (this.getWidth()/2), (this.getHeight()/2)+3);
 			
 			g2d.setColor(Color.red);
-			g2d.fillOval((this.getWidth()/2)-5, (this.getHeight()/2)-5, 10, 10);
+			g2d.fillOval((this.getWidth()/2)-7, (this.getHeight()/2)-7, 15, 15);
 
 		}
 	}
