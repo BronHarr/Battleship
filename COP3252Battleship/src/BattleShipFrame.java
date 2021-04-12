@@ -47,7 +47,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		
 		p1Fleet = PlaceShips.BattleFleet;
 		p2Fleet = PlaceShipsPlayer2.BattleFleet;
-		TurnLabel = new JLabel(p1Str + FIRE);
+		TurnLabel = new JLabel(p2Str + FIRE);
 		TurnLabel.setHorizontalAlignment(JLabel.CENTER);
 		TurnLabel.setVerticalAlignment(JLabel.CENTER);
 		TurnLabel.setBackground(Color.black);
@@ -71,7 +71,6 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 	}
-	
 	public void actionPerformed(ActionEvent time) { //if theres time, maybe flash "you sunk my battleship!"													
 		if(isReady()) {								//somewhere when a ship is sunk
 			timer.stop();
@@ -84,6 +83,10 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 				remove(TurnLabel);
 				revalidate();
 				repaint();
+				timer.start();
+				timer.stop();
+				dispose();
+				MainMenu menu=new MainMenu(800,400);
 			}
 			else if(sunken == 2) { //p2 fleet is destroyed
 				JLabel winner = new JLabel( "<html><Font size=+50>Player One Wins!</font>");
@@ -93,9 +96,13 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 				remove(TurnLabel);
 				revalidate();
 				repaint();
+				timer.start();
+				timer.stop();
+				dispose();
+				MainMenu menu=new MainMenu(800,400);
 			}
 			else
- 			 NextTurn();
+ 				NextTurn();
 		}
 		
 	}
@@ -130,13 +137,13 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		if(currentPlayerTurn == 1) {
 		 remove(p1);
 		 add(p2, BorderLayout.CENTER);
-		 TurnLabel.setText(p2Str + FIRE);
+		 TurnLabel.setText(p1Str + FIRE);
 		 currentPlayerTurn = 2;
 		}
 		else {
 		 remove(p2);
 		 add(p1, BorderLayout.CENTER);
-		 TurnLabel.setText(p1Str + FIRE);
+		 TurnLabel.setText(p2Str + FIRE);
 		 currentPlayerTurn = 1;
 		}
 		revalidate();
