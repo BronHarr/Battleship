@@ -37,7 +37,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		
 		p1Fleet = PlaceShips.BattleFleet;
 		p2Fleet = PlaceShipsPlayer2.BattleFleet;
-		TurnLabel = new JLabel(p2Str + FIRE);
+		TurnLabel = new JLabel(p1Str + FIRE);
 		TurnLabel.setHorizontalAlignment(JLabel.CENTER);
 		TurnLabel.setVerticalAlignment(JLabel.CENTER);
 		TurnLabel.setBackground(Color.black);
@@ -48,9 +48,9 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		container = getContentPane();
 		p2 = new Player2Move(); 
 		p1 = new PlayerMove();
-		currentPlayerTurn = 1;
+		currentPlayerTurn = 2;
 
-		add(p1, BorderLayout.CENTER);
+		add(p2, BorderLayout.CENTER);
 		add(TurnLabel, BorderLayout.SOUTH);
 		setVisible(true);
 		//once a second, check if board is ready to switch players
@@ -68,28 +68,32 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 			
 			int sunken = FleetSunk();
 			if(sunken == 1) { //p1 fleet is destroyed
+				p1.TurnBoardOn();
+				p2.TurnBoardOn();
 				JLabel winner = new JLabel( "<html><Font size=+50>Player Two Wins!</font>");
 				winner.setForeground(Color.yellow);
 				winner.setHorizontalAlignment(JLabel.CENTER);
+				remove(p1);
 				add(winner, BorderLayout.NORTH);
 				remove(TurnLabel);
 				revalidate();
 				repaint();
-				timer.start();
-				timer.stop();
+				wait(5000);
 				dispose();
 				MainMenu menu=new MainMenu(800,400);
 			}
 			else if(sunken == 2) { //p2 fleet is destroyed
+				p1.TurnBoardOn();
+				p2.TurnBoardOn();
 				JLabel winner = new JLabel( "<html><Font size=+50>Player One Wins!</font>");
 				winner.setForeground(Color.yellow);
 				winner.setHorizontalAlignment(JLabel.CENTER);
+				remove(p2);
 				add(winner, BorderLayout.NORTH);
 				remove(TurnLabel);
 				revalidate();
 				repaint();
-				timer.start();
-				timer.stop();
+				wait(5000);
 				dispose();
 				MainMenu menu=new MainMenu(800,400);
 			}
@@ -121,23 +125,34 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		else
 		 return 0;
 	}
+	public static void wait(int ms)
+	{
+    		try
+    		{
+        		Thread.sleep(ms);
+    		}
+    		catch(InterruptedException ex)
+    		{
+        		Thread.currentThread().interrupt();
+    		}
+	}
 
 	public boolean isReady() {
 		//if player has taken their turn, return true
-		return 	(p1.getTurns() > p2.getTurns() && currentPlayerTurn == 1) || (p1.getTurns() == p2.getTurns() && currentPlayerTurn == 2);
+		return 	(p2.getTurns() > p1.getTurns() && currentPlayerTurn == 1) || (p2.getTurns() == p1.getTurns() && currentPlayerTurn == 2);
 	}
 	
 	public void NextTurn() {
 		if(currentPlayerTurn == 1) {
-		 remove(p1);
-		 add(p2, BorderLayout.CENTER);
-		 TurnLabel.setText(p1Str + FIRE);
-		 currentPlayerTurn = 2;
-		}
-		else {
 		 remove(p2);
 		 add(p1, BorderLayout.CENTER);
 		 TurnLabel.setText(p2Str + FIRE);
+		 currentPlayerTurn = 2;
+		}
+		else {
+		 remove(p1);
+		 add(p2, BorderLayout.CENTER);
+		 TurnLabel.setText(p1Str + FIRE);
 		 currentPlayerTurn = 1;
 		}
 		revalidate();
