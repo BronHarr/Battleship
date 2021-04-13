@@ -1,29 +1,19 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 public class BattleShipFrame extends JFrame implements ActionListener{
 	
 	private Container container;
 	private BorderLayout gui; //South region has a static label that can be changed depending on event
-	private PlayerMove p1;
-	private Player2Move p2;
-	public static JLabel TurnLabel;			// <---
+	public static PlayerMove p1;
+	public static Player2Move p2;
+	public static JLabel TurnLabel;
 	
 	private int currentPlayerTurn;
 	private Ship[] p1Fleet;
@@ -36,7 +26,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 	
 	
 	private Timer timer;
-	private int delay = 400;
+	private int delay = 1000;
 	
 	
 	/*public static void main(String args[]) {
@@ -71,9 +61,11 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 	}
-	public void actionPerformed(ActionEvent time) { //if theres time, maybe flash "you sunk my battleship!"													
-		if(isReady()) {								//somewhere when a ship is sunk
+	public void actionPerformed(ActionEvent time) { //potential actions to take based on
+													//conditions checked every second
+		if(isReady()) {								
 			timer.stop();
+			
 			int sunken = FleetSunk();
 			if(sunken == 1) { //p1 fleet is destroyed
 				JLabel winner = new JLabel( "<html><Font size=+50>Player Two Wins!</font>");
@@ -101,10 +93,12 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 				dispose();
 				MainMenu menu=new MainMenu(800,400);
 			}
-			else
+			else {
+				p1.TurnBoardOn();
+				p2.TurnBoardOn();
  				NextTurn();
-		}
-		
+			}
+		}	
 	}
 	
 	//returns 1 or 2 if either player has lost all ships

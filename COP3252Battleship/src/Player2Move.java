@@ -1,38 +1,28 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.concurrent.TimeUnit;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
     
 public class Player2Move extends JPanel {
 
 	private GridLayout gridLayout;		
-	private JPanel jpanel;			
-	private Ship EnemyFleet[];		
+	private JPanel jpanel;					
 	private WaterPanel[][] PlayerGameBoard;
-	private int ShipsRemaining=5;
-	private int turnsTaken;
-	//bombarded : permanently adds 3 to turnsTaken so as not to disrupt turn mechanism
+	private int turnsTaken=0;
 
 	public Player2Move(){
 		
-		gridLayout= new GridLayout(10,10,1,1);
 		setPreferredSize(new Dimension(500,500));
+		gridLayout= new GridLayout(10,10,1,1);
 		jpanel= new JPanel(gridLayout);
 		jpanel.setBackground(Color.black);
 		jpanel.setPreferredSize(new Dimension(500, 500));
-		EnemyFleet= PlaceShips.BattleFleet;
 		
 		this.setBackground(Color.black);
 		PlayerGameBoard = new WaterPanel[10][10];		
 		for (int y=0;y<10;y++) {			
-			for (int x=0;x<10;x++) {					
+			for (int x=0;x<10;x++) {	//10x10 Gridlayout of WaterPanel objects				
 				PlayerGameBoard[x][y] = new WaterPanel(2, x, y);
 				jpanel.add(PlayerGameBoard[x][y]);				
 			}
@@ -55,4 +45,23 @@ public class Player2Move extends JPanel {
 		}
 		return count;
 	}
+
+	public void TurnBoardOff() {					//trying
+		
+		for (int i=0;i<10;i++) {
+			for (int j=0;j<10;j++) {
+				PlayerGameBoard[i][j].TurnOff();	
+			}
+		}
+	}	
+
+	public void TurnBoardOn() {				//trying
+	
+		for (int i=0;i<10;i++) {
+			for (int j=0;j<10;j++) {
+				PlayerGameBoard[i][j].TurnOn();
+				
+			}
+		}
+	}		
 }

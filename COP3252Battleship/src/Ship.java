@@ -1,8 +1,3 @@
-import java.awt.Button;
-import java.awt.Color;
-
-import javax.swing.JButton;
-
 public class Ship{
 	
 	//version on github
@@ -56,5 +51,4 @@ public class Ship{
 			}
 		}		
 	}
-	
 }

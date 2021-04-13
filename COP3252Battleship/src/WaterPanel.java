@@ -14,9 +14,10 @@ public class WaterPanel extends JPanel{
 	private int xCoord;
 	private int yCoord;
 	private Ship[] fleet;
+	private boolean MouseCanClick=true;	
+
 	
 	public WaterPanel(int player, int x, int y){
-	
 		missed = false;
 		whichPlayer = player;
 		xCoord = x;
@@ -30,9 +31,11 @@ public class WaterPanel extends JPanel{
 		//when clicked, update cell to show 
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				  if(!Interacted()) {
+				  if(!Interacted() && MouseCanClick) {
 				   CheckForHit();
 				   update();
+				   BattleShipFrame.p1.TurnBoardOff();
+				   BattleShipFrame.p2.TurnBoardOff();
 				  }	
 			}
 		});
@@ -47,6 +50,14 @@ public class WaterPanel extends JPanel{
 	}
 	public boolean isHit() {
 		return ShipHit;
+	}
+	
+	public void TurnOff() {						
+		MouseCanClick=false;
+	}
+	
+	public void TurnOn() {			
+		MouseCanClick=true;
 	}
 	
 	private void CheckForHit() {		
