@@ -5,12 +5,13 @@ public class Ship{
 	private boolean[][] LocationOnGameBoard;
 	private int ShipSize;
 	private int HitCounter;
-
+	private String ShipName;
 	
-	public Ship(int ShipSize) {
+	public Ship(int ShipSize, String name) {
 		this.ShipSize=ShipSize;
 		LocationOnGameBoard=new boolean[10][10];
 		HitCounter=0;
+		ShipName=name;
 		
 		for (int i=0;i<10;i++) {
 			for (int j=0;j<10;j++) {
@@ -18,6 +19,10 @@ public class Ship{
 				LocationOnGameBoard[i][j] = false;				
 			}
 		}
+	}
+	
+	public String GetShipName() {
+		return ShipName;
 	}
 	
 	public int GetShipSize() {

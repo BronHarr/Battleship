@@ -1,5 +1,6 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
@@ -15,9 +16,10 @@ public class WaterPanel extends JPanel{
 	private int yCoord;
 	private Ship[] fleet;
 	private boolean MouseCanClick=true;	
-
+	private Font SinkShipFont;										////added
 	
 	public WaterPanel(int player, int x, int y){
+		SinkShipFont = new Font("Calibri", Font.BOLD, 35);			//added
 		missed = false;
 		whichPlayer = player;
 		xCoord = x;
@@ -62,15 +64,27 @@ public class WaterPanel extends JPanel{
 	
 	private void CheckForHit() {		
 		int i = 0;
+		String ShipName;
 		while(i < 5) {
-			if(fleet[i].IsAHit(yCoord, xCoord)) 
+			ShipName=fleet[i].GetShipName();
+			
+			if(fleet[i].IsAHit(yCoord, xCoord)) { 
 				ShipHit = true;
+				if (fleet[i].ShipHasSunk()) {							
+					BattleShipFrame.TurnLabel.setFont(SinkShipFont);				///////  Added to indicate which ship was sunk
+					BattleShipFrame.TurnLabel.setText("SANK ENEMY SHIP: " + ShipName);	///////     *wasn't sure how to put a variable inside
+					BattleShipFrame.TurnLabel.setForeground(Color.YELLOW);			///////         *of html so created a font
+				}
+				else
+					BattleShipFrame.TurnLabel.setText("<html><br><center><p><font color=red><font size=+50>H I T!</font></font><p><html>");
+			}
 			i++;
 		}
 		update();
 		
 		if(!ShipHit) {
 			missed = true;
+			BattleShipFrame.TurnLabel.setText("<html><br><center><p><font color=white><font size=+50>M I S S!</font></font><p><html>");
 			update();
 		}
 		

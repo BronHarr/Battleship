@@ -1,23 +1,18 @@
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
+public class PlaceShipsPlayer2 implements ActionListener {
 	
 	private GridLayout gridLayout;	
 	private JButton[][] GameBoard;
@@ -27,13 +22,11 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 	private boolean OnFirstClick;		//set to true before choosing which ship to set, false after clicking button to place ship
 	public static Ship BattleFleet[];
 	
-	private int CurrentShip=0;
-	private boolean GameInProgress=false;	//set to true after all 5 ships are placed
+	private int CurrentShip=0;	
 	private JPanel MainPanel;
 	private JPanel ShipButtons;
-	private JButton ClickedShipButton;
+	private JButton ClickedShipButton;	
 	
-	private boolean BoardEnabled=false;
 	private boolean CurrentlyPlacingShip=false;
 	private int ShipsPlacedOnBoard=0;
 	private ArrayList<Integer> CoordinatePair;
@@ -41,10 +34,8 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 	private JFrame MyFrame;	
 	
 	public PlaceShipsPlayer2() {
-		  
-		  
-		  MyFrame=new JFrame("Player 2  Place Your Ships!");
-		  
+		  	  
+		  MyFrame=new JFrame("Player 2  Place Your Ships!");		  
 		  gridLayout=new GridLayout(10,10);	
 				  		  	
 		  MainPanel=new JPanel();
@@ -88,9 +79,9 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 	public void actionPerformed( ActionEvent event ) {					
 					
 		 for (int y=0;y<10;y++){										
-				for (int x=0;x<10;x++) {			//code runs after clicked a button to set ship or when game has actually started
+				for (int x=0;x<10;x++) {			
 					
-					 if (event.getSource()==GameBoard[y][x] && OnFirstClick==false && GameInProgress==false) {					
+					 if (event.getSource()==GameBoard[y][x] && OnFirstClick==false) {					
 							if (SecondClickDrawsShip(y,x,CurrentShipSize)==true) { 		//true when a ship is placed on the game board
 								OnFirstClick=true;										//resetting OnFirstClick back to true after this event
 								ClickedShipButton.setBackground(Color.GRAY);			
@@ -135,29 +126,29 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 			 		OnFirstClick=false;
 				 	CurrentlyPlacingShip=true;
 			 		
-				 	if(ClickedShipButton.getText().toString().contentEquals("Ship 1") ) {				 		
+				 	if(ClickedShipButton.getName().toString().contentEquals("carrier") ) {				 		
 				 		CurrentShip=0;		
 				 		CurrentShipSize=5;				 						 						 						 		
 				 		DrawPossibleShipPaths(FirstClick_Y,FirstClick_X,5);
 				 						 		
 				 	}
 				
-				 	else if (ClickedShipButton.getText().toString().contentEquals("Ship 2") ){
+				 	else if (ClickedShipButton.getName().toString().contentEquals("Thebattleship") ){
 				 		CurrentShip=1;		
 				 		CurrentShipSize=4;				 						 						 						 		
 				 		DrawPossibleShipPaths(FirstClick_Y,FirstClick_X,4);
 				 	}
-				 	else if (ClickedShipButton.getText().toString().contentEquals("Ship 3")) {
+				 	else if (ClickedShipButton.getName().toString().contentEquals("cruiser") ) {
 				 		CurrentShip=2;		
 				 		CurrentShipSize=3;				 						 						 						 		
 				 		DrawPossibleShipPaths(FirstClick_Y,FirstClick_X,3);
 				 	}
-				 	else if (ClickedShipButton.getText().toString().contentEquals("Ship 4") ){
+				 	else if (ClickedShipButton.getName().toString().contentEquals("submarine") ){
 				 		CurrentShip=3;		
 				 		CurrentShipSize=3;				 						 						 						 		
 				 		DrawPossibleShipPaths(FirstClick_Y,FirstClick_X,3);
 				 	}
-				 	else if (ClickedShipButton.getText().toString().contentEquals("Ship 5") ){
+				 	else if (ClickedShipButton.getName().toString().contentEquals("destroyer") ){
 				 		CurrentShip=4;		
 				 		CurrentShipSize=2;				 						 						 						 		
 				 		DrawPossibleShipPaths(FirstClick_Y,FirstClick_X,2);
@@ -373,11 +364,23 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 	
 	public void InitializeShips() {
 		int ShipLength=5;
+		String ShipName=new String();
 		for (int i=0;i<5;i++) {
-			if (i==3)							//There are two ships of size 3 in classic battleship
+			if (i==0)
+				ShipName="CARRIER";
+			else if (i==1)
+				ShipName="BATTLESHIP";
+			else if (i==2)
+				ShipName="CRUISER";
+				
+			else if (i==3) {							//There are two ships of size 3 in classic battleship
 				ShipLength++;
+				ShipName="SUBMARINE";
+			}
+			else if (i==4)
+				ShipName="DESTROYER";
 			
-			BattleFleet[i]=new Ship(ShipLength);
+			BattleFleet[i]=new Ship(ShipLength,ShipName);
 			ShipLength--;
 		}
 	}
@@ -392,14 +395,45 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 			  shipbutton.setBackground(Color.WHITE);
 			  shipbutton.addActionListener(this);
 			  
-			  if (i<=4) {
-				  shipbutton.setText("Ship " + (i+1) );
+			  if (i==0) {
+				  shipbutton.setText("   CARRIER   ");
+				  shipbutton.setName("carrier");
+				  shipbutton.setSize(30, 30);
+				  ShipButtons.add(shipbutton);
+				  ShipButtons.add(Box.createRigidArea(new Dimension(0, 15)));
+			  }
+			  else if (i==1) {
+				  shipbutton.setText("BATTLESHIP");
+				  shipbutton.setName("Thebattleship");
 				  ShipButtons.add(shipbutton);
 				  ShipButtons.add(Box.createRigidArea(new Dimension(0, 15)));
 			  }
 			  
+			  
+			  else if (i==2) {
+				  shipbutton.setText("   CRUISER   ");
+				  shipbutton.setName("cruiser");
+				  ShipButtons.add(shipbutton);
+				  ShipButtons.add(Box.createRigidArea(new Dimension(0, 15)));
+			  }
+			  
+			  else if (i==3) {
+				  shipbutton.setText("SUBMARINE");
+				  shipbutton.setName("submarine");
+				  ShipButtons.add(shipbutton);
+				  ShipButtons.add(Box.createRigidArea(new Dimension(0, 15)));
+			  }
+			  
+			  else if (i==4) {
+				  shipbutton.setText("DESTROYER");
+				  shipbutton.setName("destroyer");
+				  ShipButtons.add(shipbutton);
+				  ShipButtons.add(Box.createRigidArea(new Dimension(0, 30)));
+			  }
+			  
+			 			  
 			  else if (i==5) {
-				  shipbutton.setText("Reset");
+				  shipbutton.setText("RESET SHIPS");
 				  shipbutton.setBackground(Color.BLACK);
 				  shipbutton.setForeground(Color.RED);
 				  ShipButtons.add(shipbutton);
@@ -407,7 +441,7 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 			  }
 			  
 			  else {
-				  shipbutton.setText("Ready");
+				  shipbutton.setText("      READY    ");				 
 				  shipbutton.setBackground(Color.LIGHT_GRAY);
 				  shipbutton.setEnabled(false);
 				  ShipButtons.add(shipbutton);
@@ -424,9 +458,7 @@ public class PlaceShipsPlayer2 extends JFrame implements ActionListener {
 			BattleFleet[i].ResetShipCoordinates();
 		}
 		
-		
-		//FirstClick_X=FirstClick_Y=0;
-		//CurrentShip=4;
+	 
 		for (int i=0;i<10;i++) {
 			for (int j=0;j<10;j++) {
 				GameBoard[i][j].setBackground(Color.WHITE);

@@ -13,7 +13,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 	private BorderLayout gui; //South region has a static label that can be changed depending on event
 	public static PlayerMove p1;
 	public static Player2Move p2;
-	public static JLabel TurnLabel;
+	public static JLabel TurnLabel;		
 	
 	private int currentPlayerTurn;
 	private Ship[] p1Fleet;
@@ -143,7 +143,8 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 	}
 	
 	public void NextTurn() {
-		if(currentPlayerTurn == 1) {
+		TurnLabel.setForeground(Color.WHITE);			//added because setting font to yellow in WaterPanel when a ship gets sunk
+		if(currentPlayerTurn == 1) {					//needs to be changed back to white in the very next turn.
 		 remove(p2);
 		 add(p1, BorderLayout.CENTER);
 		 TurnLabel.setText(p2Str + FIRE);
