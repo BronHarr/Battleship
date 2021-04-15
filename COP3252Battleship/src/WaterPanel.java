@@ -5,7 +5,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 public class WaterPanel extends JPanel{
@@ -72,11 +79,17 @@ public class WaterPanel extends JPanel{
 				ShipHit = true;
 				if (fleet[i].ShipHasSunk()) {							
 					BattleShipFrame.NotificationLabel.setFont(SinkShipFont);				
-					BattleShipFrame.NotificationLabel.setText("SANK ENEMY SHIP: " + ShipName);	
-					BattleShipFrame.NotificationLabel.setForeground(Color.YELLOW);			
+					BattleShipFrame.NotificationLabel.setText("SINKING ENEMY SHIP: " + ShipName);	
+					BattleShipFrame.NotificationLabel.setForeground(Color.YELLOW);
+					PlaySoundEffect("sink sound");						
+					
+					
 				}
-				else
+				else {
 					BattleShipFrame.NotificationLabel.setText("<html><center><p><font color=red><font size=+50>H I T!</font></font><p><html>");
+					PlaySoundEffect("hit sound");
+					
+				}
 			}
 			i++;
 		}
@@ -84,7 +97,8 @@ public class WaterPanel extends JPanel{
 		
 		if(!ShipHit) {
 			missed = true;
-			BattleShipFrame.NotificationLabel.setText("<html><center><p><font color=white><font size=+50>M I S S!</font></font><p><html>");
+			BattleShipFrame.NotificationLabel.setText("<html><center><p><font color=white><font size=+50>M I S S!</font></font><p><html>");			
+			PlaySoundEffect("miss sound");		
 			update();
 		}
 		
@@ -92,6 +106,32 @@ public class WaterPanel extends JPanel{
 	
 	public void update() {
 		repaint();
+	}
+	
+	public void PlaySoundEffect(String SoundEffect) {
+		String FileLocation="";
+		
+		if (SoundEffect=="hit sound") {						//playing free sound effect from https://mixkit.co/free-sound-effects/explosion/
+			FileLocation=".//src//explodingsound.wav";
+		}
+		else if (SoundEffect=="miss sound") {				//playing free sound effect from https://www.fesliyanstudios.com/royalty-free-sound-effects-download/water-splashing-20
+			FileLocation=".//src//watersoundeffectinwav.wav";
+		}
+		else if (SoundEffect=="sink sound") {				//playing free sound effect from https://mixkit.co/free-sound-effects/explosion/
+			FileLocation=".//src//sinksound.wav";
+		}
+		
+		try {										    
+			AudioInputStream TheEffect=AudioSystem.getAudioInputStream(new File(FileLocation));
+			Clip PlaySound=AudioSystem.getClip();
+			PlaySound.open(TheEffect);			
+			PlaySound.start();			    
+		}
+
+		catch(Exception e) {
+			System.out.println("Error playing" + SoundEffect + "effect sound");
+		}
+		
 	}
 	
 	public void paintComponent(Graphics g){
@@ -125,6 +165,8 @@ public class WaterPanel extends JPanel{
 			g2d.fillOval((this.getWidth()/2)-7, (this.getHeight()/2)-7, 15, 15);
 
 		}
+		
+		
 	}
 	
 	

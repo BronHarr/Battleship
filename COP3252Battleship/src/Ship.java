@@ -1,7 +1,5 @@
 public class Ship{
-	
-	//version on github
-
+		
 	private boolean[][] LocationOnGameBoard;
 	private int ShipSize;
 	private int HitCounter;
@@ -14,8 +12,7 @@ public class Ship{
 		ShipName=name;
 		
 		for (int i=0;i<10;i++) {
-			for (int j=0;j<10;j++) {
-				//LocationOnGameBoard[i][j]=new JButton();
+			for (int j=0;j<10;j++) {				
 				LocationOnGameBoard[i][j] = false;				
 			}
 		}

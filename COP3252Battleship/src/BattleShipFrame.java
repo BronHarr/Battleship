@@ -29,7 +29,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 	private final String FIRE = "<html><br><center><p><font color=red><font size=+40>F I R E !</font></font><p><html>"; 
 	
 	private Timer timer;
-	private int delay = 1500;
+	private int delay = 2000;		//what should this be so the game doesn't go super fast?
 	
 	
 	/*public static void main(String args[]) {
@@ -67,7 +67,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		this.setResizable(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-	}///////////////////////////////////////////////////////////////////////////////////////////////////
+	}
 	public void actionPerformed(ActionEvent event) { 
 		if(event.getSource() == p1 || event.getSource() == p2) {} //w.o this line game can crash if first turn
 																 //click happens too soon
@@ -161,6 +161,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		 TurnLabel.setText(p1Str + FIRE);
 		 currentPlayerTurn = 1;
 		}
+		
 		revalidate();
 		repaint();
 		timer.start();

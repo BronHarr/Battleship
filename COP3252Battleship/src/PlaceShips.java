@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -15,9 +14,7 @@ import javax.swing.JPanel;
 
 
 public class PlaceShips implements ActionListener {
-	
-	//version on github
-	
+			
 	private GridLayout gridLayout;	
 	private JButton[][] GameBoard;
 	private int CurrentShipSize;	

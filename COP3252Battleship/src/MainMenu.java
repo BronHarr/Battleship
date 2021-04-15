@@ -12,20 +12,22 @@ public class MainMenu extends JFrame
 	public MainMenu(int height, int width)
 	{
 		frame=new JFrame();
-		frame.setTitle("Battleship");
+		frame.setTitle("Battleship");			
 		frame.setPreferredSize(new Dimension(height, width));
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		JPanel mainpanel=new JPanel();
+		//mainpanel.setBackground(Color.black);                           //trying
 		mainpanel.setLayout(new GridBagLayout());
 		GridBagConstraints c=new GridBagConstraints();
 		JLabel label=new JLabel("Welcome to Battleship!");
+		//label.setForeground(Color.RED);                              //trying		
 		c.fill=GridBagConstraints.CENTER;
 		c.insets=new Insets(2,2,100,2);
 		c.gridx=1;
 		c.gridy=0;
 		c.anchor=GridBagConstraints.PAGE_START;
 		mainpanel.add(label,c);
-		start=new JButton("New Game");
+		start=new JButton("New Game");		
 		start.addActionListener(new Options());
 		c.fill=GridBagConstraints.CENTER;
 		c.insets=new Insets(5,5,5,5);
@@ -46,5 +48,6 @@ public class MainMenu extends JFrame
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.pack();
+		
 	}
 }
