@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -13,7 +15,10 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 	private BorderLayout gui; //South region has a static label that can be changed depending on event
 	public static PlayerMove p1;
 	public static Player2Move p2;
-	public static JLabel TurnLabel;		
+	public static JLabel TurnLabel;
+	public static JLabel NotificationLabel;
+	public static JButton Back2Menu;
+	private boolean gameover = false;
 	
 	private int currentPlayerTurn;
 	private Ship[] p1Fleet;
@@ -23,10 +28,8 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 	private String p2Str = "<html><font size=+36>Player TWO</font><html> " ;
 	private final String FIRE = "<html><br><center><p><font color=red><font size=+40>F I R E !</font></font><p><html>"; 
 	
-	
-	
 	private Timer timer;
-	private int delay = 1000;
+	private int delay = 1500;
 	
 	
 	/*public static void main(String args[]) {
@@ -42,8 +45,11 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		TurnLabel.setVerticalAlignment(JLabel.CENTER);
 		TurnLabel.setBackground(Color.black);
 		TurnLabel.setForeground(Color.white);
+		NotificationLabel = new JLabel("<html><font size=+20>...</font><html>");
+		NotificationLabel.setHorizontalAlignment(JLabel.CENTER);
+		NotificationLabel.setForeground(Color.white);
 		gui = new BorderLayout();
-		setSize(800,660);
+		setSize(800,700);
 		setLayout(gui);
 		container = getContentPane();
 		p2 = new Player2Move(); 
@@ -52,6 +58,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 
 		add(p2, BorderLayout.CENTER);
 		add(TurnLabel, BorderLayout.SOUTH);
+		add(NotificationLabel, BorderLayout.NORTH);
 		setVisible(true);
 		//once a second, check if board is ready to switch players
 		timer = new Timer(delay, this);
@@ -60,52 +67,59 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		this.setResizable(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-	}
-	public void actionPerformed(ActionEvent time) { //potential actions to take based on
-													//conditions checked every second
-		if(isReady()) {								
+	}///////////////////////////////////////////////////////////////////////////////////////////////////
+	public void actionPerformed(ActionEvent event) { 
+		if(event.getSource() == p1 || event.getSource() == p2) {} //w.o this line game can crash if first turn
+																 //click happens too soon
+		else if(turnTaken() && !gameover) {//turn has been taken							
 			timer.stop();
 			
-			int sunken = FleetSunk();
+			int sunken = FleetSunk();//count sunk ships on both sides
 			if(sunken == 1) { //p1 fleet is destroyed
-				p1.TurnBoardOn();
-				p2.TurnBoardOn();
-				JLabel winner = new JLabel( "<html><Font size=+50>Player Two Wins!</font>");
-				winner.setForeground(Color.yellow);
-				winner.setHorizontalAlignment(JLabel.CENTER);
-				remove(p1);
-				add(winner, BorderLayout.NORTH);
+				p1.TurnBoardOff();
+				p2.TurnBoardOff();
+				gameover = true;
+				NotificationLabel.setText( "<html><Font size=+50>Player Two Wins!</font>");
+				NotificationLabel.setForeground(Color.yellow);
+				Back2Menu = new JButton("MAIN MENU");
+				Back2Menu.addActionListener(this);
 				remove(TurnLabel);
+				add(Back2Menu, BorderLayout.SOUTH);
 				revalidate();
 				repaint();
-				wait(5000);
-				dispose();
-				MainMenu menu=new MainMenu(800,400);
 			}
 			else if(sunken == 2) { //p2 fleet is destroyed
-				p1.TurnBoardOn();
-				p2.TurnBoardOn();
-				JLabel winner = new JLabel( "<html><Font size=+50>Player One Wins!</font>");
-				winner.setForeground(Color.yellow);
-				winner.setHorizontalAlignment(JLabel.CENTER);
-				remove(p2);
-				add(winner, BorderLayout.NORTH);
+				p1.TurnBoardOff();
+				p2.TurnBoardOff();
+				gameover = true;
+				NotificationLabel.setText( "<html><Font size=+50>Player One Wins!</font>");
+				NotificationLabel.setForeground(Color.yellow);
+				Back2Menu = new JButton("MAIN MENU");
+				Back2Menu.addActionListener(this);
 				remove(TurnLabel);
+				Back2Menu = new JButton("MAIN MENU");
+				Back2Menu.addActionListener(this);
+				remove(TurnLabel);
+				add(Back2Menu, BorderLayout.SOUTH);
 				revalidate();
 				repaint();
-				wait(5000);
-				dispose();
-				MainMenu menu=new MainMenu(800,400);
 			}
 			else {
 				p1.TurnBoardOn();
 				p2.TurnBoardOn();
  				NextTurn();
 			}
-		}	
-	}
-	
+		}
+		
+		if(event.getSource() == Back2Menu){
+			MainMenu menu = new MainMenu(800,400);
+			dispose();
+			
+		}
+		///////////////////////////////////////////////////////////////////////////////////////////////
+	}///////////////////////////////////////////////////////////////////////////////////////////////////
 	//returns 1 or 2 if either player has lost all ships
+	
 	private int FleetSunk() {
 		int p1SunkShips = 0;
 		int p2SunkShips = 0;
@@ -125,26 +139,17 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		else
 		 return 0;
 	}
-	public static void wait(int ms)
-	{
-    		try
-    		{
-        		Thread.sleep(ms);
-    		}
-    		catch(InterruptedException ex)
-    		{
-        		Thread.currentThread().interrupt();
-    		}
-	}
 
-	public boolean isReady() {
-		//if player has taken their turn, return true
+	public boolean turnTaken() {
+		//if current player has taken their turn, return true
 		return 	(p2.getTurns() > p1.getTurns() && currentPlayerTurn == 1) || (p2.getTurns() == p1.getTurns() && currentPlayerTurn == 2);
 	}
 	
 	public void NextTurn() {
-		TurnLabel.setForeground(Color.WHITE);			//added because setting font to yellow in WaterPanel when a ship gets sunk
-		if(currentPlayerTurn == 1) {					//needs to be changed back to white in the very next turn.
+		TurnLabel.setForeground(Color.WHITE);
+		NotificationLabel.setText("<html><font size=+20>...</font><html>" );
+		NotificationLabel.setForeground(Color.WHITE);
+		if(currentPlayerTurn == 1) {					
 		 remove(p2);
 		 add(p1, BorderLayout.CENTER);
 		 TurnLabel.setText(p2Str + FIRE);
