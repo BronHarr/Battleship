@@ -31,12 +31,14 @@ public class PlaceShipsPlayer2 implements ActionListener {
 	private int ShipsPlacedOnBoard=0;
 	private ArrayList<Integer> CoordinatePair;
 	
-	private JFrame MyFrame;	
+	private JFrame MyFrame;
+	//private Color LightBlue;
 	
 	public PlaceShipsPlayer2() {
 		  	  
 		  MyFrame=new JFrame("Player 2  Place Your Ships!");		  
 		  gridLayout=new GridLayout(10,10);	
+		  //LightBlue=new Color(167,216,230);
 				  		  	
 		  MainPanel=new JPanel();
 		  BoxLayout boxlayout1=new BoxLayout(MainPanel,BoxLayout.X_AXIS);

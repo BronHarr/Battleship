@@ -15,7 +15,7 @@ public class WaterPanel extends JPanel{
 	private int xCoord;
 	private int yCoord;
 	private Ship[] fleet;
-	private boolean MouseCanClick=true;	
+	private boolean MouseCanClick=false;	
 	private Font SinkShipFont;										////added
 	
 	public WaterPanel(int player, int x, int y){
@@ -71,12 +71,12 @@ public class WaterPanel extends JPanel{
 			if(fleet[i].IsAHit(yCoord, xCoord)) { 
 				ShipHit = true;
 				if (fleet[i].ShipHasSunk()) {							
-					BattleShipFrame.TurnLabel.setFont(SinkShipFont);				///////  Added to indicate which ship was sunk
-					BattleShipFrame.TurnLabel.setText("SANK ENEMY SHIP: " + ShipName);	///////     *wasn't sure how to put a variable inside
-					BattleShipFrame.TurnLabel.setForeground(Color.YELLOW);			///////         *of html so created a font
+					BattleShipFrame.NotificationLabel.setFont(SinkShipFont);				
+					BattleShipFrame.NotificationLabel.setText("SANK ENEMY SHIP: " + ShipName);	
+					BattleShipFrame.NotificationLabel.setForeground(Color.YELLOW);			
 				}
 				else
-					BattleShipFrame.TurnLabel.setText("<html><br><center><p><font color=red><font size=+50>H I T!</font></font><p><html>");
+					BattleShipFrame.NotificationLabel.setText("<html><center><p><font color=red><font size=+50>H I T!</font></font><p><html>");
 			}
 			i++;
 		}
@@ -84,7 +84,7 @@ public class WaterPanel extends JPanel{
 		
 		if(!ShipHit) {
 			missed = true;
-			BattleShipFrame.TurnLabel.setText("<html><br><center><p><font color=white><font size=+50>M I S S!</font></font><p><html>");
+			BattleShipFrame.NotificationLabel.setText("<html><center><p><font color=white><font size=+50>M I S S!</font></font><p><html>");
 			update();
 		}
 		
