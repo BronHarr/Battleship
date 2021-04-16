@@ -47,6 +47,7 @@ with anonymous listeners.
 ---> Work Division <---
 -
 Greg was responsible for PlaceShips.java/PlaceShipsPlayer2.java, Ship.java, retrieval and implementation of sound effects and background image.
+
 Brian was responsible for BattleshipFrame.java, WaterPanel.java, and the player move classes
 
 
