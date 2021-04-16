@@ -43,10 +43,27 @@ with anonymous listeners.
 
 ------><--------
 -
--
+Greg was responsible for PlaceShips.java/PlaceShipsPlayer2.java, Ship.java, retrieval and implementation of sound effects and background image.
 Brian was responsible for BattleshipFrame.java, WaterPanel.java, and the player move classes
 
 
 ----> extra features <------
 sound effects - sound files played in reaction to game events
 Main menu - central menu to start the game from and return to when the game ends
+
+
+---> Citing Resources <---
+Main Menu theme sound: Free sound effect retrieved from https://mixkit.co/free-sound-effects/win/ and per the website policy, sound effects used for “educational purposes” qualify as usage under the “free license”, and items used under this license “can be used in your commercial and non-commercial projects for free.” This sound effect is property of the mentioned source and is not content belonging to any group members of this project.
+
+Explosion sound used during gameplay: Free sound effect retrieved from https://mixkit.co/free-sound-effects/explosion/ and per the website policy, sound effects used for “educational purposes” qualify as usage under the “free license”, and items used under this license “can be used in your commercial and non-commercial projects for free.” This sound effect is property of the mentioned source and is not content belonging to any group members of this project.
+
+Ship sink sound used during gameplay: Free sound effect retrieved from https://mixkit.co/free-sound-effects/explosion/ and per the website policy, sound effects used for “educational purposes” qualify as usage under the “free license”, and items used under this license “can be used in your commercial and non-commercial projects for free.” This sound effect is property of the mentioned source and is not content belonging to any group members of this project.
+
+Water splashing sound: Free sound effect retrieved from https://www.fesliyanstudios.com/royalty-free-sound-effects-download/water-splashing-20 and the website specifies “These free water splashing sound effects can be downloaded and used for video editing, adobe premiere, foley, youtube videos, plays, video games and more!” and the site requests that the following line be included to credit them- “free sound effects from https://www.fesliyanstudios.com” This sound effect is property of the mentioned source and is not content belonging to any group members of this project.
+
+Player winning sound effect: Free sound effect retrieved from https://mixkit.co/free-sound-effects/win/ and per the website policy, sound effects used for “educational purposes” qualify as usage under the “free license”, and items used under this license “can be used in your commercial and non-commercial projects for free.” This sound effect is property of the mentioned source and is not content belonging to any group members of this project.
+
+Sound effect when pressing “Ready” button: Free sound effect retrieved from https://mixkit.co/free-sound-effects/win/ and per the website policy, sound effects used for “educational purposes” qualify as usage under the “free license”, and items used under this license “can be used in your commercial and non-commercial projects for free.” This sound effect is property of the mentioned source and is not content belonging to any group members of this project.
+
+Background photo used in main screen: This image was obtained from https://stock.adobe.com/  after creating a 7-day free trial for the “standard license” and according to website policy, those who have the standard license may “reproduce up to 500,000 copies of the asset in all media, including product packaging, printed marketing materials, digital documents, or software.“ This image is property of the mentioned source and is not content belonging to any group members of this project.
+
