@@ -6,13 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 public class WaterPanel extends JPanel{
@@ -129,7 +127,7 @@ public class WaterPanel extends JPanel{
 		}
 
 		catch(Exception e) {
-			System.out.println("Error playing" + SoundEffect + "effect sound");
+			System.out.println("Error playing " + SoundEffect + " effect");
 		}
 		
 	}

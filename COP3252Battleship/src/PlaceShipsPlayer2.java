@@ -3,8 +3,13 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -120,10 +125,8 @@ public class PlaceShipsPlayer2 implements ActionListener {
 				 	ClickedShipButton=(JButton)ShipButtons.getComponent(i);	
 				 	ClickedShipButton.setBackground(Color.YELLOW);
 				 	GetRandomSquare();
-				 	FirstClick_X=CoordinatePair.get(1);
-				 	System.out.println(FirstClick_X);
-			 		FirstClick_Y=CoordinatePair.get(0);
-			 		System.out.println(FirstClick_Y);
+				 	FirstClick_X=CoordinatePair.get(1);				 	
+			 		FirstClick_Y=CoordinatePair.get(0);			 		
 			 		DisableBoard("no");	
 			 		OnFirstClick=false;
 				 	CurrentlyPlacingShip=true;
@@ -166,13 +169,23 @@ public class PlaceShipsPlayer2 implements ActionListener {
 				ResetBoard();	//also disables board
 				
 			}
-//888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888			
+			
 			else if (event.getSource()==ShipButtons.getComponent(12) ) {		//Ready Button    Clicking starts game
 				
 				BattleShipFrame Bframe = new BattleShipFrame();
 				MyFrame.setVisible(false);
+				try {										    
+					AudioInputStream Effect=AudioSystem.getAudioInputStream(new File(".//src//readysound.wav"));	//https://mixkit.co/free-sound-effects/win/
+					Clip PlaySound=AudioSystem.getClip();
+					PlaySound.open(Effect);			
+					PlaySound.start();			    
+				}
+
+				catch(Exception e) {
+					System.out.println("Error playing player2 ready sound effect");
+				}
 			}
-//8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888		
+	
   }
 	
 	

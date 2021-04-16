@@ -3,7 +3,11 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -87,6 +91,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 				add(Back2Menu, BorderLayout.SOUTH);
 				revalidate();
 				repaint();
+				PlayWinningSound();
 			}
 			else if(sunken == 2) { //p2 fleet is destroyed
 				p1.TurnBoardOff();
@@ -103,6 +108,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 				add(Back2Menu, BorderLayout.SOUTH);
 				revalidate();
 				repaint();
+				PlayWinningSound();
 			}
 			else {
 				p1.TurnBoardOn();
@@ -119,6 +125,20 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		///////////////////////////////////////////////////////////////////////////////////////////////
 	}///////////////////////////////////////////////////////////////////////////////////////////////////
 	//returns 1 or 2 if either player has lost all ships
+	
+	public void PlayWinningSound() {
+		try {										    
+			AudioInputStream Effect=AudioSystem.getAudioInputStream(new File(".//src//winning sound.wav"));
+			Clip PlaySound=AudioSystem.getClip();
+			PlaySound.open(Effect);			
+			PlaySound.start();			    
+		}
+
+		catch(Exception e) {
+			System.out.println("Error playing winning effect");
+		}
+		
+	}
 	
 	private int FleetSunk() {
 		int p1SunkShips = 0;
@@ -161,7 +181,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		 TurnLabel.setText(p1Str + FIRE);
 		 currentPlayerTurn = 1;
 		}
-		
+		System.out.println("here");
 		revalidate();
 		repaint();
 		timer.start();
