@@ -45,3 +45,8 @@ with anonymous listeners.
 -
 -
 Brian was responsible for BattleshipFrame.java, WaterPanel.java, and the player move classes
+
+
+----> extra features <------
+sound effects - sound files played in reaction to game events
+Main menu - central menu to start the game from and return to when the game ends
