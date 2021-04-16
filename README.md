@@ -41,13 +41,14 @@ more turns, and currentTurn is currently set to them, the board determines it is
 The boards themselves are JPanels that contain a 10x10 grid of custom JPanels that react to clicks
 with anonymous listeners.
 
-------><--------
+---> Work Division <---
 -
 Greg was responsible for PlaceShips.java/PlaceShipsPlayer2.java, Ship.java, retrieval and implementation of sound effects and background image.
 Brian was responsible for BattleshipFrame.java, WaterPanel.java, and the player move classes
 
 
 ----> extra features <------
+
 sound effects - sound files played in reaction to game events
 Main menu - central menu to start the game from and return to when the game ends
 
