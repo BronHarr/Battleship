@@ -30,6 +30,8 @@ public class PlayerMove extends JPanel {
 		add(jpanel);
 	}
 	
+	
+	
 	public int getTurns() {
 		countTurns();
 		return turnsTaken;

@@ -16,7 +16,7 @@ import javax.swing.Timer;
 public class BattleShipFrame extends JFrame implements ActionListener{
 	
 	private Container container;
-	private BorderLayout gui; //South region has a static label that can be changed depending on event
+	private BorderLayout gui; 		//South region has a static label that can be changed depending on event
 	public static PlayerMove p1;
 	public static Player2Move p2;
 	public static JLabel TurnLabel;
@@ -33,12 +33,9 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 	private final String FIRE = "<html><br><center><p><font color=red><font size=+40>F I R E !</font></font><p><html>"; 
 	
 	private Timer timer;
-	private int delay = 2000;		//what should this be so the game doesn't go super fast?
+	private int delay = 2000;		
 	
 	
-	/*public static void main(String args[]) {
-		BattleShipFrame bsf = new BattleShipFrame();
-	}*/
 	
 	public BattleShipFrame(){
 		
@@ -129,7 +126,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 	public void PlayWinningSound() {
 		try {										    
 			AudioInputStream Effect=AudioSystem.getAudioInputStream(new File(".//src//winning sound.wav"));
-			Clip PlaySound=AudioSystem.getClip();
+			Clip PlaySound=AudioSystem.getClip();		// playing free sound effect from https://mixkit.co/free-sound-effects/win/
 			PlaySound.open(Effect);			
 			PlaySound.start();			    
 		}
@@ -181,7 +178,7 @@ public class BattleShipFrame extends JFrame implements ActionListener{
 		 TurnLabel.setText(p1Str + FIRE);
 		 currentPlayerTurn = 1;
 		}
-		System.out.println("here");
+		
 		revalidate();
 		repaint();
 		timer.start();

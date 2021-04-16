@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -26,25 +25,20 @@ public class PlaceShipsPlayer2 implements ActionListener {
 	private int FirstClick_Y;
 	private boolean OnFirstClick;		//set to true before choosing which ship to set, false after clicking button to place ship
 	public static Ship BattleFleet[];
-	
 	private int CurrentShip=0;	
 	private JPanel MainPanel;
 	private JPanel ShipButtons;
-	private JButton ClickedShipButton;	
-	
+	private JButton ClickedShipButton;		
 	private boolean CurrentlyPlacingShip=false;
 	private int ShipsPlacedOnBoard=0;
-	private ArrayList<Integer> CoordinatePair;
-	
+	private ArrayList<Integer> CoordinatePair;	
 	private JFrame MyFrame;
-	
-	
+		
 	public PlaceShipsPlayer2() {
 		  	  
 		  MyFrame=new JFrame("Player 2  Place Your Ships!");		  
 		  gridLayout=new GridLayout(10,10);	
-		  
-				  		  	
+		  				  		  	
 		  MainPanel=new JPanel();
 		  BoxLayout boxlayout1=new BoxLayout(MainPanel,BoxLayout.X_AXIS);
 		  MainPanel.setLayout(boxlayout1);
@@ -64,7 +58,7 @@ public class PlaceShipsPlayer2 implements ActionListener {
 		  FirstClick_X=FirstClick_Y=0;
 		  
 		  GameBoard=new JButton[10][10];		
-			for (int y=0;y<10;y++) {			//setting up battleship game board
+			for (int y=0;y<10;y++) {			//setting up battleship game board to place ships
 				for (int x=0;x<10;x++) {
 					GameBoard[y][x]=new JButton();
 					GameBoard[y][x].setBackground(Color.WHITE);
@@ -78,9 +72,7 @@ public class PlaceShipsPlayer2 implements ActionListener {
 		  MyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		  MyFrame.setSize(500, 400);
 		  MyFrame.setResizable(true);		
-		  MyFrame.setVisible(true);
-		  
-		  
+		  MyFrame.setVisible(true);		  		  
 	}
 		  																
 	public void actionPerformed( ActionEvent event ) {					
@@ -116,13 +108,13 @@ public class PlaceShipsPlayer2 implements ActionListener {
 		 //      Buttons on left side of screen
 		 ////////////////////////////////////////////////
 		 for (int i=0;i<=8;i++) {
-			 if (event.getSource()==ShipButtons.getComponent(i)) {
-				 	if (CurrentlyPlacingShip==true) {
+			 if (event.getSource()==ShipButtons.getComponent(i)) {			//if click a button on left side of screen (to place ship)
+				 	if (CurrentlyPlacingShip==true) {					//if user clicks a white square on board to see possible ship paths
 				 		ErasePossibleShipPaths(CurrentShipSize,"DeleteAllPaths");
 				 		ClickedShipButton.setBackground(Color.WHITE);
 				 	}
 			 
-				 	ClickedShipButton=(JButton)ShipButtons.getComponent(i);	
+				 	ClickedShipButton=(JButton)ShipButtons.getComponent(i);		//storing the clicked button inside "ClickedShipButton"
 				 	ClickedShipButton.setBackground(Color.YELLOW);
 				 	GetRandomSquare();
 				 	FirstClick_X=CoordinatePair.get(1);				 	
@@ -174,9 +166,10 @@ public class PlaceShipsPlayer2 implements ActionListener {
 				
 				BattleShipFrame Bframe = new BattleShipFrame();
 				MyFrame.setVisible(false);
+				
 				try {										    
-					AudioInputStream Effect=AudioSystem.getAudioInputStream(new File(".//src//readysound.wav"));	//https://mixkit.co/free-sound-effects/win/
-					Clip PlaySound=AudioSystem.getClip();
+					AudioInputStream Effect=AudioSystem.getAudioInputStream(new File(".//src//readysound.wav"));	
+					Clip PlaySound=AudioSystem.getClip();					// playing free sound effect from https://mixkit.co/free-sound-effects/win/
 					PlaySound.open(Effect);			
 					PlaySound.start();			    
 				}
@@ -204,13 +197,10 @@ public class PlaceShipsPlayer2 implements ActionListener {
 		}
 									
 		else					//if user selects a black square, nothing should happen
-		  return false;
-		
-		
+		  return false;				
 	}
 	
-	public void PlaceShipOnBoard(int SecondClick_Y,int SecondClick_X,int ShipLength) {		//drawing ship on board
-		
+	public void PlaceShipOnBoard(int SecondClick_Y,int SecondClick_X,int ShipLength) {		//drawing ship on board		
 		
 		for (int i=1;i<ShipLength;i++) {				//finding which direction the user clicked
 			
@@ -256,13 +246,10 @@ public class PlaceShipsPlayer2 implements ActionListener {
 				GameBoard[FirstClick_Y][FirstClick_X].setBackground(Color.BLACK);
 				BattleFleet[CurrentShip].AddShipCoordinates(FirstClick_Y, FirstClick_X);
 				return;
-			}
-						
-		}
-		
+			}						
+		}		
 	}
-	
-	
+		
 	public void ErasePossibleShipPaths(int ShipLength,String PathToKeep) {	
 		
 		for (int i=0;i<ShipLength;i++){				//watches out for other ships on the board and board boundaries		
@@ -409,6 +396,7 @@ public class PlaceShipsPlayer2 implements ActionListener {
 			  JButton shipbutton=new JButton();
 			  shipbutton.setBackground(Color.WHITE);
 			  shipbutton.addActionListener(this);
+			  shipbutton.setFocusable(false);
 			  
 			  if (i==0) {
 				  shipbutton.setText("   CARRIER   ");
@@ -445,8 +433,7 @@ public class PlaceShipsPlayer2 implements ActionListener {
 				  ShipButtons.add(shipbutton);
 				  ShipButtons.add(Box.createRigidArea(new Dimension(0, 30)));
 			  }
-			  
-			 			  
+			  			 			  
 			  else if (i==5) {
 				  shipbutton.setText("RESET SHIPS");
 				  shipbutton.setBackground(Color.BLACK);
@@ -472,8 +459,7 @@ public class PlaceShipsPlayer2 implements ActionListener {
 		for (int i=0;i<5;i++) {
 			BattleFleet[i].ResetShipCoordinates();
 		}
-		
-	 
+			 
 		for (int i=0;i<10;i++) {
 			for (int j=0;j<10;j++) {
 				GameBoard[i][j].setBackground(Color.WHITE);
@@ -500,8 +486,7 @@ public class PlaceShipsPlayer2 implements ActionListener {
 				for (int j=0;j<10;j++) {
 					GameBoard[i][j].setEnabled(false);
 				}
-			}
-			
+			}			
 		}
 		
 		else if (choice=="no") {
@@ -509,10 +494,8 @@ public class PlaceShipsPlayer2 implements ActionListener {
 				for (int j=0;j<10;j++) {
 					GameBoard[i][j].setEnabled(true);
 				}
-			}
-			
-		}
-		
+			}			
+		}		
 	}
 	
 	public void GetRandomSquare() {		
@@ -530,9 +513,7 @@ public class PlaceShipsPlayer2 implements ActionListener {
 			}
 			
 		}while(true);							
-	}
-	
-	
+	}		
 	
 
 }

@@ -1,11 +1,9 @@
-
 import java.awt.*;
-
 import javax.swing.*;
 public class Instructions extends JFrame
 {
-    	static JButton mainmenu;
-    	public static JFrame rulesframe;
+    static JButton mainmenu;
+    public static JFrame rulesframe;
 	public static JButton exit;
 	public Instructions(int h,int w) 
 	{
@@ -32,7 +30,7 @@ public class Instructions extends JFrame
 		text.setRows(10);
 		text.setColumns(10);		
 		rulespanel.add(text);
-	    	rulesframe.add(rulespanel,"Center");
+	    rulesframe.add(rulespanel,"Center");
 		rulesframe.add(rulespanel);
 		rulesframe.setResizable(true);
 		rulesframe.setVisible(true);
@@ -41,7 +39,7 @@ public class Instructions extends JFrame
 		button.setBounds(300,200,150,75);
 		rulesframe.add(button);
 		rulesframe.setLayout(null);
-      		rulesframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      		button.addActionListener(e->{rulesframe.dispose();});
+      	rulesframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      	button.addActionListener(e->{rulesframe.dispose();});
     	}
 }

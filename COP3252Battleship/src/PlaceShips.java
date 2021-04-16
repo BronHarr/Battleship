@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -17,8 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-
-public class PlaceShips implements ActionListener {
+public class PlaceShips implements ActionListener {			
 			
 	private GridLayout gridLayout;	
 	private JButton[][] GameBoard;
@@ -26,29 +24,23 @@ public class PlaceShips implements ActionListener {
 	private int FirstClick_X;
 	private int FirstClick_Y;
 	private boolean OnFirstClick;		//set to true before choosing which ship to set, false after clicking button to place ship
-	public static Ship BattleFleet[];
-	
+	public static Ship BattleFleet[];	
 	private int CurrentShip=0;	
 	private JPanel MainPanel;
 	private JPanel ShipButtons;
 	private JButton ClickedShipButton;
 	private boolean CurrentlyPlacingShip=false;
 	private int ShipsPlacedOnBoard=0;
-	private ArrayList<Integer> CoordinatePair;
-	
-	private JFrame MyFrame;
-	
+	private ArrayList<Integer> CoordinatePair;	
+	private JFrame MyFrame;	
 	
 	public PlaceShips() {		  
 		  
 		  MyFrame=new JFrame("Player 1  Place Your Ships!");
-		  gridLayout=new GridLayout(10,10);
-		  
-				  		  	
+		  gridLayout=new GridLayout(10,10);		  				  		  	
 		  MainPanel=new JPanel();
 		  BoxLayout boxlayout1=new BoxLayout(MainPanel,BoxLayout.X_AXIS);
-		  MainPanel.setLayout(boxlayout1);
-		  	  
+		  MainPanel.setLayout(boxlayout1);		  	  
 		  CreateButtonsOnLeftColumn();		//adding buttons to left hand side	  
 		  		  
 		  JPanel GridBoard=new JPanel();
@@ -64,7 +56,7 @@ public class PlaceShips implements ActionListener {
 		  FirstClick_X=FirstClick_Y=0;
 		  
 		  GameBoard=new JButton[10][10];		
-			for (int y=0;y<10;y++) {			//setting up battleship game board
+			for (int y=0;y<10;y++) {			//setting up battleship game board to place ships
 				for (int x=0;x<10;x++) {
 					GameBoard[y][x]=new JButton();
 					GameBoard[y][x].setBackground(Color.WHITE);					
@@ -74,13 +66,12 @@ public class PlaceShips implements ActionListener {
 			}
 		  DisableBoard("yes");
 		  CoordinatePair=new ArrayList<Integer>();
-		 
+			  
 		  MyFrame.add(MainPanel);
 		  MyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		  MyFrame.setSize(500, 400);
 		  MyFrame.setResizable(true);		
-		  MyFrame.setVisible(true);
-		  
+		  MyFrame.setVisible(true);		  
 	}
 		  																
 	public void actionPerformed( ActionEvent event ) {					
@@ -89,21 +80,20 @@ public class PlaceShips implements ActionListener {
 				for (int x=0;x<10;x++) {			
 					
 					 if (event.getSource()==GameBoard[y][x] && OnFirstClick==false) {					
-							if (SecondClickDrawsShip(y,x,CurrentShipSize)==true) { 		//true when a ship is placed on the game board
+							if (SecondClickDrawsShip(y,x,CurrentShipSize)==true) { 		//true when a ship is placed on the game board-
 								OnFirstClick=true;										//resetting OnFirstClick back to true after this event
 								ClickedShipButton.setBackground(Color.GRAY);			
 								ClickedShipButton.setEnabled(false);
 								DisableBoard("yes");
 								CurrentlyPlacingShip=false;
 								ShipsPlacedOnBoard++;
-																	//if all ships have been placed, ShipsPlacedOnBoard=5
+																	//if all ships have been placed, ShipsPlacedOnBoard=5 and user can hit "ready"
 								if (ShipsPlacedOnBoard==5) {
 									ShipButtons.getComponent(12).setBackground(Color.YELLOW);
 									ShipButtons.getComponent(12).setEnabled(true);
 									
 								}
-																																															
-								
+																																																							
 							}
 						break;	
 					}
@@ -133,7 +123,7 @@ public class PlaceShips implements ActionListener {
 			 		OnFirstClick=false;
 				 	CurrentlyPlacingShip=true;
 			 		
-				 	if(ClickedShipButton.getName().toString().contentEquals("carrier") ) {				 		
+				 	if(ClickedShipButton.getName().toString().contentEquals("carrier") ) {		//clicking ship buttons on LHS of screen	
 				 		CurrentShip=0;		
 				 		CurrentShipSize=5;				 						 						 						 		
 				 		DrawPossibleShipPaths(FirstClick_Y,FirstClick_X,5);
@@ -168,17 +158,18 @@ public class PlaceShips implements ActionListener {
 		 
 		 
 		 if (event.getSource()==ShipButtons.getComponent(10) ) {		//Reset Button
-				ResetBoard();	//also disables board
-				
+				ResetBoard();					//also disables board				
 			}
 		
 			else if (event.getSource()==ShipButtons.getComponent(12) ) {		//Ready Button    Clicking switches to player two
 				
 				MyFrame.setVisible(false);								
 				PlaceShipsPlayer2 player2turn=new PlaceShipsPlayer2();
+																			//clicking ready button plays sound below
+				
 				try {										    
-					AudioInputStream Effect=AudioSystem.getAudioInputStream(new File(".//src//readysound.wav"));
-					Clip PlaySound=AudioSystem.getClip();
+					AudioInputStream Effect=AudioSystem.getAudioInputStream(new File(".//src//readysound.wav"));	
+					Clip PlaySound=AudioSystem.getClip();				// playing free sound effect from https://mixkit.co/free-sound-effects/win/
 					PlaySound.open(Effect);			
 					PlaySound.start();			    
 				}
@@ -191,14 +182,14 @@ public class PlaceShips implements ActionListener {
 		
   }
 		
-	public boolean SecondClickDrawsShip(int YClick, int XClick,int ShipLength) {		//if user chooses a ship path, ship is created
-		if (GameBoard[YClick][XClick].getBackground()==Color.LIGHT_GRAY) {
+	public boolean SecondClickDrawsShip(int YClick, int XClick,int ShipLength) {		//if user chooses a ship path by clicking a gray square,
+		if (GameBoard[YClick][XClick].getBackground()==Color.LIGHT_GRAY) {				//then the ship is drawn on the board
 			PlaceShipOnBoard(YClick,XClick,ShipLength);			
 			return true;
 		}
 	
-		else if (GameBoard[YClick][XClick].getBackground()==Color.WHITE) {			//if user chooses a blank square to view ship paths
-			ErasePossibleShipPaths(ShipLength, "EraseAllPaths");
+		else if (GameBoard[YClick][XClick].getBackground()==Color.WHITE) {			//if user chooses a blank square to view ship paths,
+			ErasePossibleShipPaths(ShipLength, "EraseAllPaths");					//then current ship paths are erased and new ones drawn
 			DrawPossibleShipPaths(YClick,XClick,ShipLength);
 			FirstClick_X=XClick;
 			FirstClick_Y=YClick;
@@ -206,14 +197,11 @@ public class PlaceShips implements ActionListener {
 		}
 									
 		else					//if user selects a black square, nothing should happen
-		  return false;
-		
-		
+		  return false;				
 	}
 	
 	public void PlaceShipOnBoard(int SecondClick_Y,int SecondClick_X,int ShipLength) {		//drawing ship on board
-		
-		
+				
 		for (int i=1;i<ShipLength;i++) {				//finding which direction the user clicked
 			
 			if (FirstClick_Y+i==SecondClick_Y && FirstClick_X==SecondClick_X) {			//clicking south path, drawing south path
@@ -258,10 +246,8 @@ public class PlaceShips implements ActionListener {
 				GameBoard[FirstClick_Y][FirstClick_X].setBackground(Color.BLACK);
 				BattleFleet[CurrentShip].AddShipCoordinates(FirstClick_Y, FirstClick_X);
 				return;
-			}
-						
-		}
-		
+			}						
+		}		
 	}
 	
 	
@@ -340,8 +326,7 @@ public class PlaceShips implements ActionListener {
 				for (int i=0;i<Length;i++) 
 					GameBoard[Y-i][X].setBackground(Color.LIGHT_GRAY);
 				
-			}
-			
+			}			
 		}
 						
 		if (X+Length-1<=9) {		//draws east line
@@ -354,8 +339,7 @@ public class PlaceShips implements ActionListener {
 			if (DontDrawEastFlag==0) {	
 				for (int i=0;i<Length;i++) 
 					GameBoard[Y][X+i].setBackground(Color.LIGHT_GRAY);
-			}
-									
+			}									
 		}	
 				
 		if (X-Length+1>=0) {		//draws west line
@@ -368,18 +352,17 @@ public class PlaceShips implements ActionListener {
 			if (DontDrawWestFlag==0) {				
 				for (int i=0;i<Length;i++) 
 					GameBoard[Y][X-i].setBackground(Color.LIGHT_GRAY);
-			}
-			 
-		}
-		
+			}			 
+		}																//when there are ships surrounding a clicked white square such that
+																		//no ship paths can be drawn, no paths are drawn and no black center square appears
 		if (DontDrawWestFlag!=0 && DontDrawEastFlag!=0 && DontDrawNorthFlag!=0 && DontDrawSouthFlag!=0)			
 			GameBoard[Y][X].setBackground(Color.WHITE);				
 					
 		else
-		   GameBoard[Y][X].setBackground(Color.BLACK);
+		   GameBoard[Y][X].setBackground(Color.BLACK);		//drawing center black square that paths protrude from
 	}
 	
-	public void InitializeShips() {
+	public void InitializeShips() {			//creating objects of type "Ship" and storing in the "BattleFleet"
 		int ShipLength=5;
 		String ShipName=new String();
 		for (int i=0;i<5;i++) {
@@ -411,11 +394,11 @@ public class PlaceShips implements ActionListener {
 			  JButton shipbutton=new JButton();
 			  shipbutton.setBackground(Color.WHITE);
 			  shipbutton.addActionListener(this);
+			  shipbutton.setFocusable(false);
 			  
 			  if (i==0) {
 				  shipbutton.setText("   CARRIER   ");
 				  shipbutton.setName("carrier");
-				  shipbutton.setSize(30, 30);
 				  ShipButtons.add(shipbutton);
 				  ShipButtons.add(Box.createRigidArea(new Dimension(0, 15)));
 			  }
@@ -424,8 +407,7 @@ public class PlaceShips implements ActionListener {
 				  shipbutton.setName("Thebattleship");
 				  ShipButtons.add(shipbutton);
 				  ShipButtons.add(Box.createRigidArea(new Dimension(0, 15)));
-			  }
-			  
+			  }			  
 			  
 			  else if (i==2) {
 				  shipbutton.setText("   CRUISER   ");
@@ -460,22 +442,19 @@ public class PlaceShips implements ActionListener {
 			  else {
 				  shipbutton.setText("      READY    ");				 
 				  shipbutton.setBackground(Color.LIGHT_GRAY);
-				  shipbutton.setEnabled(false);
-				  ShipButtons.add(shipbutton);
-				  
-			  }
-			  
+				  shipbutton.setEnabled(false);				  
+				  ShipButtons.add(shipbutton);			  
+			  }			  			  
 		  }
 		  
 		  MainPanel.add(ShipButtons);			
 	}
 	
-	public void ResetBoard() {
+	public void ResetBoard() {				
 		for (int i=0;i<5;i++) {
 			BattleFleet[i].ResetShipCoordinates();
 		}
-		
-		
+				
 		for (int i=0;i<10;i++) {
 			for (int j=0;j<10;j++) {
 				GameBoard[i][j].setBackground(Color.WHITE);
@@ -496,14 +475,13 @@ public class PlaceShips implements ActionListener {
 		ShipButtons.getComponent(12).setEnabled(false);
 	}
 	
-	public void DisableBoard(String choice) {
-		if (choice=="yes") {
+	public void DisableBoard(String choice) {			//makes board not clickable, only want clickable board
+		if (choice=="yes") {							//when user clicks the button of the ship to place
 			for (int i=0;i<10;i++) {
 				for (int j=0;j<10;j++) {
 					GameBoard[i][j].setEnabled(false);
 				}
-			}
-			
+			}			
 		}
 		
 		else if (choice=="no") {
@@ -511,15 +489,13 @@ public class PlaceShips implements ActionListener {
 				for (int j=0;j<10;j++) {
 					GameBoard[i][j].setEnabled(true);
 				}
-			}
-			
-		}
-		
+			}			
+		}		
 	}
 	
-	public void GetRandomSquare() {		
-		 int xcoord,ycoord;
-		 Random random=new Random();
+	public void GetRandomSquare() {		//when user clicks button of the ship they want to place, the possible
+		 int xcoord,ycoord;				//paths of that ship draw on the board by getting a random square and 
+		 Random random=new Random();	//drawing from it.
 		
 		do
 		{

@@ -1,3 +1,4 @@
+
 public class Ship{
 		
 	private boolean[][] LocationOnGameBoard;
@@ -27,7 +28,7 @@ public class Ship{
 	}
 	
 	public void AddShipCoordinates(int y,int x) {
-			LocationOnGameBoard[y][x] = true;		//using enabled for a valid coordinate
+			LocationOnGameBoard[y][x] = true;		//using true for a valid coordinate
 	}
 	
 	public boolean IsAHit(int y,int x) {
@@ -38,6 +39,7 @@ public class Ship{
 		}
 		return false;
 	}
+	
 	
 	public boolean ShipHasSunk() {
 		return (HitCounter==ShipSize);	

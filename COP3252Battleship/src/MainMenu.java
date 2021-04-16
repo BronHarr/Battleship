@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.io.File;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -15,7 +14,7 @@ public class MainMenu extends JFrame
 		try {										    
 			AudioInputStream Effect=AudioSystem.getAudioInputStream(new File(".//src//loadscreenmusic.wav"));
 			Clip PlaySound=AudioSystem.getClip();
-			PlaySound.open(Effect);												//https://mixkit.co/free-sound-effects/win/
+			PlaySound.open(Effect);						// playing free sound effect from https://mixkit.co/free-sound-effects/win/
 			PlaySound.start();			    
 		}
 

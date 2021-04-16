@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -21,10 +19,11 @@ public class WaterPanel extends JPanel{
 	private int yCoord;
 	private Ship[] fleet;
 	private boolean MouseCanClick=false;	
-	private Font SinkShipFont;										////added
+	private Font SinkShipFont;										
+	
 	
 	public WaterPanel(int player, int x, int y){
-		SinkShipFont = new Font("Calibri", Font.BOLD, 35);			//added
+		SinkShipFont = new Font("Calibri", Font.BOLD, 35);			
 		missed = false;
 		whichPlayer = player;
 		xCoord = x;
@@ -67,6 +66,7 @@ public class WaterPanel extends JPanel{
 		MouseCanClick=true;
 	}
 	
+	
 	private void CheckForHit() {		
 		int i = 0;
 		String ShipName;
@@ -79,9 +79,7 @@ public class WaterPanel extends JPanel{
 					BattleShipFrame.NotificationLabel.setFont(SinkShipFont);				
 					BattleShipFrame.NotificationLabel.setText("SINKING ENEMY SHIP: " + ShipName);	
 					BattleShipFrame.NotificationLabel.setForeground(Color.YELLOW);
-					PlaySoundEffect("sink sound");						
-					
-					
+					PlaySoundEffect("sink sound");																
 				}
 				else {
 					BattleShipFrame.NotificationLabel.setText("<html><center><p><font color=red><font size=+50>H I T!</font></font><p><html>");
@@ -162,9 +160,7 @@ public class WaterPanel extends JPanel{
 			g2d.setColor(Color.red);
 			g2d.fillOval((this.getWidth()/2)-7, (this.getHeight()/2)-7, 15, 15);
 
-		}
-		
-		
+		}				
 	}
 	
 	
