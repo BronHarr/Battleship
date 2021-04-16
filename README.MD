@@ -1,4 +1,4 @@
-####Welcome to COP3252 BAttleship README####
+####Welcome to COP3252 Battleship README####
 Greg Garman
 Jason Graham
 Brian Hauer
