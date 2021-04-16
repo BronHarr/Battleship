@@ -4,6 +4,7 @@ Jason Graham
 Brian Hauer
 
 ----> Main Menu <--------
+
 The game opens to the main menu. 
 you can start a new game with the "new game" button
 or read the instructions with the "instructions" button
@@ -17,6 +18,7 @@ Once the ships are placed the players will take turns selecting on the grid to s
 
 
 ------> Placing Ships <-------
+
 a new Frame will open up, and Player 1 will be the first to place their ships. using
 the buttons on the lefthand collumn, they may select any ship in any order, and place
 them in any orientation that becomes shaded by the interface. when all ships are placed,
@@ -26,6 +28,7 @@ finished the game begins.
 
 
 ------> Game <-------
+
 Player one moves first, simply click on the cell you wish to fire at. the board will update
 that cell to show a hit or a miss, and then proceed to the next turn. If ship sinks, the board
 will notify the player which ship was sunk, and will also detect when no ships on either
