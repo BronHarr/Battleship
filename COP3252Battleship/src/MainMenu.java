@@ -50,7 +50,7 @@ public class MainMenu extends JFrame
 			}
 		};
 	
-		//mainpanel.setBackground(bug1);                           //trying
+		
 		mainpanel.setLayout(new GridBagLayout());
 		GridBagConstraints c=new GridBagConstraints();
 		JLabel label=new JLabel("Welcome to Battleship!");
