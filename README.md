@@ -53,6 +53,7 @@ Main menu - central menu to start the game from and return to when the game ends
 
 
 ---> Citing Resources <---
+
 Main Menu theme sound: Free sound effect retrieved from https://mixkit.co/free-sound-effects/win/ and per the website policy, sound effects used for “educational purposes” qualify as usage under the “free license”, and items used under this license “can be used in your commercial and non-commercial projects for free.” This sound effect is property of the mentioned source and is not content belonging to any group members of this project.
 
 Explosion sound used during gameplay: Free sound effect retrieved from https://mixkit.co/free-sound-effects/explosion/ and per the website policy, sound effects used for “educational purposes” qualify as usage under the “free license”, and items used under this license “can be used in your commercial and non-commercial projects for free.” This sound effect is property of the mentioned source and is not content belonging to any group members of this project.
